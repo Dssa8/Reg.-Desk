@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@font-face {
+  font-family: "TwCen";
+  src: url("/fonts/TwCenMTStdSemiBold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+.twcen {
+  font-family: "TwCen", sans-serif;
+}

@@ -1,0 +1,590 @@
+{
+  "edition": "2026-06-12",
+  "editionNumber": "001",
+  "editionId": "cpfl-001",
+  "client": "CPFL Energia",
+  "title": "Report Semanal CPFL FSET",
+  "summary": "Report semanal com os principais destaques regulatórios, de mercado, consultas públicas, leilões e agenda institucional.",
+  "month": "Junho 2026",
+  "periodStart": "06/06/2026",
+  "periodEnd": "12/06/2026",
+  "period": "06/06/2026 a 12/06/2026",
+  "updatedAt": "12/06/2026 às 00:00",
+  "highlights": [
+    {
+      "title": "CMSE Aprova CVaR e VMinOp para 2027",
+      "summary": "",
+      "detail": "O Comitê de Monitoramento (CMSE) manteve, para 2027, os atuais parâmetros de aversão ao risco dos modelos computacionais do setor elétrico, preservando os parâmetros de aversão so risco do CVaR (15,40) para operação e formação de preços e o CVaR (25,35) para planejamento da expansão e cálculo da garantia física. O Comitê também promoveu ajustes marginais nos volumes mínimos operativos (VMinOp), reduzindo o Norte de 28,0% para 27,8% e o Nordeste de 23,3% para 23,1%, enquanto manteve os valores dos demais subsistemas. Adicionalmente, solicitou a elaboração de um cronograma prioritário de aprimoramentos dos modelos computacionais, visando aumentar a aderência entre planejamento, operação e formação de preços diante da crescente complexidade do SIN. Durante a reunião, a CCEE destacou que a incorporação das usinas contratadas no LRCAP 2026 reduziu a expectativa de PLD e de despacho termelétrico, diminuindo a probabilidade de acionamento de bandeiras tarifárias vermelhas. Nesse contexto, espera-se um cenário de maior estabilidade, ou mesmo de redução, dos preços de curto prazo em relação às projeções anteriores.. Adicionalmente, o CMSE aprovou diretrizes para ampliar a transparência das decisões relacionadas ao despacho por garantia energética (GE).",
+      "agency": "CMSE",
+      "status": "",
+      "level": "Alta",
+      "change": "Novo nesta edição",
+      "deadline": "",
+      "date": "",
+      "datePrecision": "",
+      "type": "",
+      "referenceNumber": "",
+      "link": ""
+    },
+    {
+      "title": "Instabilidade no mercado livre de energia",
+      "summary": "",
+      "detail": "A Justiça negou a maior parte do pedido da Electra para cancelar contratos registrados na CCEE e suspendeu cautelarmente um pagamento de R$ 14,875 milhões à sua controladora, a Continental. Em paralelo, a CCEE colocou Pontoon, Pierp, Continental e Electra Comercializadora Varejista em operação balanceada, medida que condiciona novas movimentações contratuais à verificação de equilíbrio energético, enquanto liberou a Anemus após mudança nas condições que motivaram o monitoramento. A Câmara também rejeitou recursos apresentados pela 2W e pela Diferencial, mantendo a decisão de desligamento das comercializadoras por descumprimento de obrigações no mercado.",
+      "agency": "CCEE",
+      "status": "",
+      "level": "Crítica",
+      "change": "Novo nesta edição",
+      "deadline": "",
+      "date": "",
+      "datePrecision": "",
+      "type": "",
+      "referenceNumber": "",
+      "link": ""
+    },
+    {
+      "title": "Updates Curtailment",
+      "summary": "",
+      "detail": "O ONS acionou pela primeira vez o Plano Emergencial de Corte nas distribuidoras, ao todo, foi solicitado o gerenciamento de 1.000 MW. A medida foi indicada para poder equilibrar a alta geração de micro e mini geração distribuída, combinada a uma carga menor devido ao feriado prolongado.  \nEm paralelo, LT ±800 kV Graça Aranha–Silvânia, teve autorização pelo IBAMA para o início das obras. Com cerca de 1.500 km e R$ 18 bilhões em investimentos, a LT é considerada estratégica para ampliar o escoamento de renováveis do Norte e Nordeste, o que deve aliviar os cortes por razão energética e de confiabilidade. A entrada em operação comercial da LT está prevista para acontecer entre 2029 e 2030.",
+      "agency": "ONS",
+      "status": "",
+      "level": "Alta",
+      "change": "Novo nesta edição",
+      "deadline": "",
+      "date": "",
+      "datePrecision": "",
+      "type": "",
+      "referenceNumber": "",
+      "link": ""
+    },
+    {
+      "title": "Updates LRCAP 2026: Térmicas e Hidrelétricas",
+      "summary": "",
+      "detail": "A ANEEL homologou os resultados de ambos LRCAPs em meio a questionamentos judiciais envolvendo o certame, mesmo após liminar da Justiça Federal do Ceará que havia suspendido a homologação e a assinatura dos contratos, o processo avançou. Posteriormente, o juiz negou analisar novo pedido sobre suposto descumprimento da decisão, por entender que não tinha jurisdição sobre o caso. Paralelamente, a EPP recorreu à ANEEL contra a inabilitação de cerca de 1,7 GW em projetos a gás natural. O pedido envolve empreendimentos dos Consórcios ION, que ficaram fora do certame após avaliação de habilitação técnica. A empresa sustenta que os projetos cumpriam os requisitos exigidos e busca reverter a decisão para que possam ser considerados no leilão. O caso mantém parte do resultado do LRCAP de termelétricas sob contestação regulatória.",
+      "agency": "ANEEL",
+      "status": "",
+      "level": "Alta",
+      "change": "Novo nesta edição",
+      "deadline": "",
+      "date": "",
+      "datePrecision": "",
+      "type": "",
+      "referenceNumber": "",
+      "link": ""
+    },
+    {
+      "title": "Market Snapshots",
+      "summary": "",
+      "detail": "Eleição para diretor-presidente da CCEE é adiada por falta de indicação do MME",
+      "agency": "",
+      "status": "",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "deadline": "",
+      "date": "",
+      "datePrecision": "",
+      "type": "",
+      "referenceNumber": "",
+      "link": ""
+    }
+  ],
+  "aneelAgenda": [
+    {
+      "title": "Pauta da 12ª Reunião Ordinária da Diretoria da ANEEL de 2026 – 16 de junho",
+      "summary": "",
+      "detail": "Resultado da Terceira Fase da Consulta Pública nº 45/2019, para o aprimoramento da norma que estabelecerá os critérios operativos para redução ou limitação de geração no Sistema Interligado Nacional – SIN.\nProposta de abertura de CP, para estabelecer o Processo Sancionador de Monitoramento de Mercado da CCEE.\nProcedimentos referentes à autoprodução de energia elétrica, inclusive por equiparação, referentes às alterações na Lei nº 9.074/1995 estabelecidas pela Lei nº 15.269/2025.",
+      "agency": "ANEEL",
+      "type": "",
+      "date": "",
+      "datePrecision": "",
+      "status": "",
+      "change": "",
+      "link": ""
+    }
+  ],
+  "publishedRules": [
+    {
+      "title": "Resolução Normativa ANEEL 1.157/2026",
+      "summary": "",
+      "detail": "Como resultado da CP 7/2026, foi publicada em 2 de julho a Resolução Normativa ANEEL 1.157/2026, que estabelece requisitos e procedimentos atinentes ao mecanismo excepcional para tratamento de outorgas de geração e dos Contratos de Uso do Sistema de Transmissão - CUST celebrados por centrais geradoras.",
+      "agency": "ANEEL",
+      "type": "",
+      "number": "",
+      "date": "",
+      "status": "",
+      "change": "",
+      "link": ""
+    },
+    {
+      "title": "Resolução Normativa ANEEL 1.158/2026",
+      "summary": "",
+      "detail": "Como resultado da CP 9/2025, foi publicada em 2 de julho a Resolução Normativa ANEEL 1.158/2026, que Aprova as Regras de Comercialização de Energia Elétrica aplicáveis ao Sistema de Contabilização e Liquidação - SCL e os Procedimentos de Comercialização.",
+      "agency": "ANEEL",
+      "type": "",
+      "number": "",
+      "date": "",
+      "status": "",
+      "change": "",
+      "link": ""
+    }
+  ],
+  "aneelTopics": [
+    {
+      "title": "Regulação para sistemas de armazenamento (incluindo baterias e usinas reversíveis de bombeamento)",
+      "status": "Concluído",
+      "detail": "Tema da CP 39/2023. A Diretoria da ANEEL aprovou a regulamentação dos BESS e usinas reversíveis por meio de REN a ser publicada.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Cálculo e pagamento da compensação para geração solar (Regras de Comercialização)",
+      "status": "Concluído",
+      "detail": "Tema da CP 09/2025. Publicação da REN 1.158/2026 que estabelece as Regras de Comercialização para a apuração e pagamento da compensação financeira por constrained-off de usinas fotovoltaicas.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Mecanismo Regulatório para Revogação de Contratos de Uso do Sistema de Transmissão (CUST)",
+      "status": "Concluído",
+      "detail": "Tema da CP 07/2026. Publicação da REN 1.157/2026 que estabelece as diretrizes que permitem revogação de outorga de geração e seus contratos de uso de sistema de transmissão.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Pagamento de encargos de constrained-off para usinas hidrelétricas",
+      "status": "Iniciado",
+      "detail": "A ANEEL iniciou discussões internas sobre o tema. Uma CP deve ser aberta no 1º semestre de 2026.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Modernização das tarifas de distribuição - Ciclo 1",
+      "status": "Iniciado",
+      "detail": "Tema da CP 16/2026. A CP está aberta para contribuições até 8 de agosto.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Aprimoramento da regulamentação para atendimento aos critérios para autoprodução, inclusive por equiparação",
+      "status": "Em andamento",
+      "detail": "Previsão de abertura de CP em 2026. Técnicos da ANEEL recomendaram, por meio da NT nº 7/2026, a aplicação imediata das novas regras para APE (definidas na Lei 15.269/2025). Os procedimentos às alterações na Lei nº 9.074/1995 estabelecidas pela Lei nº 15.269/2025 vão ser discutidos pela Diretoria da ANEEL na reunião do dia 16/06/2026.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Critérios operacionais para curtailment de usinas",
+      "status": "Em andamento",
+      "detail": "Tema da CP 45/2019. O resultado da CP deve ser discutido pela Diretoria da ANEEL na reunião do dia 16/06/2026.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Open Energy",
+      "status": "Em andamento",
+      "detail": "Tema da CP 07/2025. A Nota Técnica 17/2025 com o resultado da CP será levada para decisão, na reunião do dia 16/06/2026, da Diretoria da ANEEL.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Aperfeiçoamento do processo de monitoramento do mercado (segurança de mercado).",
+      "status": "Em andamento",
+      "detail": "Tema da CP 33/2025 encerrada em 22 de dezembro. Próximos passos: área técnica vai revisar as contribuições apontadas na CP à luz da Lei 15.269/2025.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Ajustes no início da cobrança do CUST para geradores com prorrogação de prazos",
+      "status": "Em andamento",
+      "detail": "Tema da CP 08/2026, encerrada em 12 de maio. Próximos passos: a Diretoria da ANEEL discutirá os resultados da CP e uma Resolução será publicada.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Alteração do Submódulo 5.2 do PRORET para incluir o teto da CDE, o Encargo de Complemento de Recursos e sua operacionalização.",
+      "status": "Não iniciada",
+      "detail": "Tema em linha com o que foi instituído pela Lei 15.269/2025. Previsão de abertura de CP em 2026.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Revisão da REN 1.031/2022, no que se refere aos descontos na tarifa de uso dos sistemas de distribuição e transmissão para fontes incentivadas.",
+      "status": "Não iniciada",
+      "detail": "Tema em linha com o que foi instituído pela Lei 15.269/2025. Previsão de abertura de CP em 2026.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Aprimoramento da regulamentação com vistas ao fim do direito ao desconto na TUSD/TUST de consumidores livres",
+      "status": "Não iniciada",
+      "detail": "Tema em linha com o que foi instituído pela Lei 15.269/2025. Previsão de abertura de CP em 2026.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Atualização da metodologia de cálculo dos limites máximos do Preço de Liquidação das Diferenças – PLD.",
+      "status": "Não iniciada",
+      "detail": "Previsão de abertura de CP em 2026",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Aprimoramento das Regras de Comercialização 2027.",
+      "status": "Não iniciada",
+      "detail": "Previsão de abertura de CP em 2026",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Avaliação quanto a inversão de Fluxo da MMGD no âmbito da contabilização e liquidação da CCEE.",
+      "status": "Não iniciada",
+      "detail": "Previsão de abertura de CP em 2026",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Avaliação das metodologias de cálculo do PLD mínimo e de definição da Tarifa de Energia de Otimização – TEO.",
+      "status": "Não iniciada",
+      "detail": "Previsão de abertura de CP em 2026",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Aprimoramento da regulamentação para que a liquidação no MCP utilize o mecanismo de dupla contabilização (PLD ex-ante e ex-post).",
+      "status": "Não iniciada",
+      "detail": "Previsão de abertura de CP em 2026",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Aprimoramento do Rateio dos custos de Reserva de Capacidade.",
+      "status": "Não iniciada",
+      "detail": "Previsão de abertura de CP em 2027",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Aprimoramentos regulatórios relacionados à abertura do mercado para o Grupo B",
+      "status": "Não iniciada",
+      "detail": "Tema em linha com o que foi instituído pela Lei 15.269/2025. Previsão de abertura de CP em 2027",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Aprimoramento das regras de acesso ao sistema de transmissão.",
+      "status": "Não iniciada",
+      "detail": "Previsão de abertura de CP em 2027",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "CP 009 ANEEL - Aprimoramentos no tratamento de excedentes de energia – Micro e Mini Geração Distribuída (MMGD)",
+      "status": "Encerrada",
+      "detail": "A CP busca aprimorar o tratamento dos excedentes de energia, especialmente da geração distribuída, buscando maior flexibilidade operativa na Rede de Distribuição. A Consulta Pública trata, entre outros aspectos, do combate à alteração à revelia de MMGD, da sinalização de restrições sistêmicas, da flexibilização operativa por conexões temporárias e do aperfeiçoamento do Plano de Gestão de Excedentes.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "2ª Fase TS 002/2025 ANEEL - Aprimoramento do Submódulo 2.1 - Coleta e ajuste de dados de medição e de outros Procedimentos de comercialização",
+      "status": "Aberta",
+      "detail": "",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "TS 011 ANEEL - Memória de cálculo dos montantes de exposições e sobrecontratações involuntárias das Distribuidoras",
+      "status": "Encerrada",
+      "detail": "Apresentar memória de cálculo dos montantes de exposições e sobrecontratações involuntárias dos agentes de distribuição, referentes aos anos de 2019, 2020 e 2021, com vistas à posterior homologação desses valores pela ANEEL.",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "CP 016 ANEEL - Modernização das Tarifas de Distribuição - Ciclo 1 (Custo Comercial)",
+      "status": "Aberta",
+      "detail": "A CP propõe substituir a atual taxa mínima de consumo (30, 50 e 100 kWh) por uma tarifa fixa mensal para consumidores de baixa tensão, destinada a cobrir os custos comerciais das distribuidoras (como medição, emissão de faturas e atendimento). A proposta prevê implementação a partir de 2029 para Tarifa Branca e SCEE (net metering system).",
+      "agency": "ANEEL",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    }
+  ],
+  "mmeTopics": [
+    {
+      "title": "Compensação por cortes de geração eólica ou solar",
+      "status": "Em andamento",
+      "detail": "Aguarda desdobramento da CP 210/2025 que encerrou em 16 de janeiro de 2026.",
+      "agency": "MME",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Liberalização do mercado para consumidores de baixa tensão e regras para o Supridor de Última Instância (SUI).",
+      "status": "Em andamento",
+      "detail": "Tema da CP 196/2025. Próximos passos: aguardando desdobramentos da Lei 15.269/2025.",
+      "agency": "MME",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Diretrizes para decisões do Comitê de Monitoramento do Setor Elétrico (CMSE) sobre despacho para segurança do suprimento",
+      "status": "Em andamento",
+      "detail": "Tema da CP 193/2025. Próximos passos: publicação de Portaria Normativa pelo MME.",
+      "agency": "MME",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Diretrizes para a Implementação de Curto Prazo de Medidores Inteligentes",
+      "status": "Em andamento",
+      "detail": "Tema da CP 198/2025. Próximos passos: publicação de Portaria Normativa pelo MME.",
+      "agency": "MME",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Diretrizes para o CMSE avaliar e aprovar a antecipação da entrada em operação de usinas contratadas em leilões de reserva de capacidade.",
+      "status": "Em andamento",
+      "detail": "Tema da CP 212/2026. Próximos passos: publicação de Portaria Normativa pelo MME.",
+      "agency": "MME",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Contabilização Dupla no Mercado de Curto Prazo – MCP",
+      "status": "Em andamento",
+      "detail": "Tema da CP 218/2026. Próximos passos: publicação de Portaria Normativa pelo MME.",
+      "agency": "MME",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Revisão da Capacidade Comercial para usinas solares, eólicas e pequenas centrais hidrelétricas (PCHs)",
+      "status": "Não iniciada",
+      "detail": "O tema está na agenda regulatória do MME e está programado para ser discutido por meio de CP em 2026.",
+      "agency": "MME",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Atualização do Regimento Interno do CMSE",
+      "status": "Não iniciada",
+      "detail": "O tema está na agenda regulatória do MME e está programado para ser discutido por meio de CP em 2026.",
+      "agency": "MME",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "CP 220 MME - Exportação de energia elétrica interruptível proveniente de geração de usinas hidrelétricas",
+      "status": "Encerrada",
+      "detail": "A proposta busca aperfeiçoar as regras de exportação de energia hidrelétrica excedente para Argentina e Uruguai, com foco na energia vertida turbinável (EVT), isto é, a geração que poderia ser produzida, mas não é absorvida pelo SIN. A exportação ocorreria de forma interruptível, sem obrigação de devolução e condicionada à segurança operativa, com o ONS definindo diariamente os volumes disponíveis. A CP prevê duas modalidades: a EVT-O, associada ao risco imediato de vertimento, e a EVT-A, baseada na previsão de excedentes futuros. Nesta última, o foco recai sobre o subsistema Sul, permitindo exportações entre junho e novembro e priorizando a recomposição dos reservatórios entre dezembro e maio. A adesão seria voluntária para hidrelétricas do MRE, com exceção das usinas cotistas e de Itaipu.",
+      "agency": "MME",
+      "level": "Média",
+      "change": "Novo nesta edição",
+      "link": ""
+    }
+  ],
+  "auctions": [
+    {
+      "title": "1º Transmissão 2026 – Sessão 2",
+      "date": "03/07/2026",
+      "detail": "Exclusivo para os lotes 7 a 10 da MEZ.",
+      "agency": "MME",
+      "status": "Agendado",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "2º Transmissão 2026",
+      "date": "30/10/2026",
+      "detail": "Aguardando resultado da CP ANEEL 006/2026. Próximos passos: publicação do edital e seus anexos.",
+      "agency": "MME",
+      "status": "Agendado",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "1º Leilão de Energia Existente (A-1, A-2 e A-3) 2026",
+      "date": "13/11/2026",
+      "detail": "A PRT nº 135/2026 definiu as diretrizes dos 3 certames.",
+      "agency": "MME",
+      "status": "Agendado",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "LRCAP 2026 -  Armazenamento – Conteúdo Nacional",
+      "date": "02/12/2026",
+      "detail": "Destinado a tecnologia nacional de armazenamento, credenciados pelo BNDES. Próximos passos: os interessados deverão cadastrar os projetos e enviar os documentos à EPE entre 12h de 15 de junho e 12h de 31 de julho de 2026.",
+      "agency": "MME",
+      "status": "Agendado",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "LRCAP 2026 -  Armazenamento – Conteúdo Internacional",
+      "date": "04/12/2026",
+      "detail": "Aberto a qualquer tecnologia de armazenamento. Próximos passos: os interessados deverão cadastrar os projetos e enviar os documentos à EPE entre 12h de 15 de junho e 12h de 31 de julho de 2026.",
+      "agency": "MME",
+      "status": "Agendado",
+      "change": "Novo nesta edição",
+      "link": ""
+    },
+    {
+      "title": "Comentários sobre os próximos leilões",
+      "date": "",
+      "detail": "O primeiro Leilão de Reserva de Capacidade (LRCAP) voltado ao armazenamento em baterias no Brasil foi dividido em dois certames, ambos com as mesmas condições contratuais e requisitos técnicos. O 1º LRCAP será destinado a projetos com tecnologia nacional; já o segundo, em 4 de dezembro, será aberto aos demais projetos de baterias. Os contratos terão duração de 15 anos, com início de suprimento previsto para 1º de agosto de 2028. As exigências técnicas incluem potência mínima em torno de 30 MW, operação contínua mínima de quatro horas, recarga completa em até 6 horas, eficiência mínima de 85%. O certame também prevê bônus locacional, com desconto de 10% no preço de lance para projetos conectados a barramentos estratégicos, especialmente no Nordeste e em Minas Gerais.\nO MME definiu as diretrizes para os Leilões de Energia Existente A-1, A-2 e A-3 de 2026, com suprimento a partir de 2027, 2028 e 2029. Os contratos destes Leilão não prevêm sem atualização dos preços ao longo da vigência.\nO cronograma dos Leilões de Transmissão em 2026 e 2027, definido pela Portaria MME nº 114/2025, prevê dois leilões por ano. A segunda sessão do 1º Leilão de 2026, relacionada aos ativos MEZ, ocorrerá em 3 de julho.\nO segundo Leilão de Transmissão de 2026, previsto para ocorrer em outubro, deve contar investimentos estimados em cerca de R$ 11,3 bilhões. O certame reúne dez lotes distribuídos por nove estados: Amazonas, Bahia, Goiás, Mato Grosso do Sul, Pará, Paraíba, Paraná, Rondônia e São Paulo. Estão previstas 2.069 km de novas linhas de transmissão.",
+      "agency": "MME",
+      "status": "",
+      "change": "Novo nesta edição",
+      "link": ""
+    }
+  ],
+  "agenda": {
+    "month": "Junho 2026",
+    "days": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30"
+    ],
+    "eventDays": [
+      "2",
+      "12",
+      "10",
+      "1",
+      "11",
+      "23"
+    ],
+    "events": [
+      {
+        "title": "Reunião Ordinária da Diretoria da ANEEL",
+        "date": "02/06/2026",
+        "agency": "ANEEL",
+        "type": "",
+        "link": ""
+      },
+      {
+        "title": "PMO semanal (ONS)",
+        "date": "12/06/2026",
+        "agency": "ONS",
+        "type": "",
+        "link": ""
+      },
+      {
+        "title": "Reunião Ordinária do CMSE",
+        "date": "10/06/2026",
+        "agency": "CMSE",
+        "type": "",
+        "link": ""
+      },
+      {
+        "title": "Encontro do PLD (CCEE)",
+        "date": "01/06/2026",
+        "agency": "CCEE",
+        "type": "",
+        "link": ""
+      },
+      {
+        "title": "Reunião do Conselho de Administração da CCEE",
+        "date": "02/062026",
+        "agency": "CCEE",
+        "type": "",
+        "link": ""
+      },
+      {
+        "title": "Reunião do CNPE",
+        "date": "11/06/2026",
+        "agency": "CNPE",
+        "type": "",
+        "link": ""
+      },
+      {
+        "title": "Circuito Deliberativo da Diretoria da ANEEL",
+        "date": "23/06/2026",
+        "agency": "ANEEL",
+        "type": "",
+        "link": ""
+      }
+    ]
+  }
+}
