@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
+import logo from "../assets/cropped_logo.png";
+import fsetLogo from "../assets/fset.png";
 
 export default function Sidebar({ agenda }) {
-  const items = [
-    ["highlights", "01", "Destaques", "bg-amber-500"],
-    ["aneel-agenda", "02", "Pautas ANEEL", "bg-blue-500"],
-    ["published-rules", "03", "Normativos publicados", "bg-cyan-500"],
-    ["aneel", "04", "Temas ANEEL", "bg-violet-500"],
-    ["mme", "05", "Temas MME", "bg-emerald-500"],
-    ["auctions", "06", "Leilões", "bg-slate-400"],
-  ];
+   const items = [
+  ["highlights", "01", "Destaques da Semana", "bg-amber-500"],
+  ["aneel-agenda", "02", "Pauta ANEEL", "bg-blue-500"],
+  ["published-rules", "03", "Normativos Publicados", "bg-cyan-500"],
+  ["aneel", "04", "Pendências Regulatórias: ANEEL", "bg-violet-500"],
+  ["mme", "05", "Pendências Regulatórias: MME", "bg-emerald-500"],
+  ["public-participation", "06", "Temas para Participação Pública", "bg-rose-500"],
+  ["auctions", "07", "Próximos Leilões", "bg-slate-400"],
+];
 
   const [active, setActive] = useState("highlights");
   const [selectedDay, setSelectedDay] = useState(null);
@@ -58,15 +61,27 @@ export default function Sidebar({ agenda }) {
 
   return (
     <aside className="w-80 min-h-screen bg-[#2b3f56] text-white p-6 flex flex-col">
-      <div>
-        <h2 className="twcen text-4xl font-extrabold tracking-tight">REGDESK</h2>
+      {/* LOGO */}
+      <div className="px-2 py-2">
+        <div className="flex items-center gap-3">
+          <img
+            src={logo}
+            alt="RegDesk"
+            className="h-8 w-auto object-contain"
+          />
 
-        <p className="mt-1 text-[10px] uppercase tracking-[0.3em] text-slate-300">
+          <h2 className="twcen mt-1 text-4xl font-semibold tracking-tight text-white">
+            REGDESK
+          </h2>
+        </div>
+
+        <p className="mt-1 text-[10px] uppercase tracking-[0.32em] text-slate-300">
           Inteligência Regulatória
         </p>
       </div>
 
-      <nav className="mt-10 space-y-2">
+      {/* MENU */}
+      <nav className="mt-7 space-y-2">
         {items.map(([id, number, label, color]) => (
           <button
             key={id}
@@ -77,16 +92,19 @@ export default function Sidebar({ agenda }) {
             `}
           >
             <div
-              className={`h-8 w-8 shrink-0 rounded-xl flex items-center justify-center text-[11px] font-bold text-white ${color}`}
+              className={`h-7 w-7 shrink-0 rounded-xl flex items-center justify-center text-[10px] font-bold text-white ${color}`}
             >
               {number}
             </div>
 
-            <span className="text-sm font-medium leading-snug">{label}</span>
+            <span className="text-[13px] font-semibold leading-snug">
+              {label}
+            </span>
           </button>
         ))}
       </nav>
 
+      {/* AGENDA */}
       <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-4">
         <div className="flex items-center justify-between">
           <p className="text-[10px] uppercase tracking-widest text-slate-300">
@@ -167,15 +185,26 @@ export default function Sidebar({ agenda }) {
         </div>
       </div>
 
-      <div className="mt-auto rounded-3xl border border-white/10 bg-white/5 p-4">
-        <p className="text-[10px] uppercase tracking-widest text-slate-300">
-          Visão FSET
-        </p>
+      {/* FSET */}
+      <div className="mt-auto pt-6">
+        <div className="mb-4 flex justify-center">
+          <img
+            src={fsetLogo}
+            alt="FSET"
+            className="h-14 w-auto object-contain"
+          />
+        </div>
 
-        <p className="mt-2 text-xs leading-relaxed text-slate-300">
-          Monitoramento executivo de sinais regulatórios, institucionais e de
-          mercado para apoiar decisões estratégicas.
-        </p>
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
+          <p className="text-[10px] uppercase tracking-widest text-slate-300">
+            Visão FSET
+          </p>
+
+          <p className="mt-2 text-xs leading-relaxed text-slate-300">
+            Monitoramento executivo de sinais regulatórios, institucionais e de
+            mercado para apoiar decisões estratégicas.
+          </p>
+        </div>
       </div>
     </aside>
   );

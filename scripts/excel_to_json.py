@@ -128,11 +128,7 @@ def main():
     period_start = format_date(edicao.get("periodo_inicio"))
     period_end = format_date(edicao.get("periodo_fim"))
 
-    if period_start and period_end:
-        period = f"{period_start} a {period_end}"
-    else:
-        period = ""
-
+    period = f"{period_start} a {period_end}" if period_start and period_end else ""
     updated_at = format_datetime(edicao.get("updated_at"))
 
     result = {
@@ -153,6 +149,7 @@ def main():
         "publishedRules": [],
         "aneelTopics": [],
         "mmeTopics": [],
+        "publicParticipation": [],
         "auctions": [],
 
         "agenda": {
@@ -223,83 +220,30 @@ def main():
             "datePrecision": data_precisao_label,
             "type": subtipo_label,
             "referenceNumber": clean(row.get("numero_referencia")),
+            "number": clean(row.get("numero_referencia")),
             "link": clean(row.get("link_referencia")),
         }
 
-        if secao_slug == "destaques":
+        if secao_slug == "destaques-da-semana":
             result["highlights"].append(item_base)
 
         elif secao_slug == "pauta-aneel":
-            result["aneelAgenda"].append(
-                {
-                    "title": title,
-                    "summary": clean(row.get("resumo_pt")),
-                    "detail": clean(row.get("detalhe_pt")),
-                    "agency": orgao,
-                    "type": subtipo_label,
-                    "date": format_date(row.get("data_evento")),
-                    "datePrecision": data_precisao_label,
-                    "status": status_label,
-                    "change": mudanca_label,
-                    "link": clean(row.get("link_referencia")),
-                }
-            )
+            result["aneelAgenda"].append(item_base)
 
         elif secao_slug == "normativos-publicados":
-            result["publishedRules"].append(
-                {
-                    "title": title,
-                    "summary": clean(row.get("resumo_pt")),
-                    "detail": clean(row.get("detalhe_pt")),
-                    "agency": orgao,
-                    "type": subtipo_label,
-                    "number": clean(row.get("numero_referencia")),
-                    "date": format_date(row.get("data_evento")),
-                    "status": status_label,
-                    "change": mudanca_label,
-                    "link": clean(row.get("link_referencia")),
-                }
-            )
+            result["publishedRules"].append(item_base)
 
-        elif secao_slug == "temas-aneel":
-            result["aneelTopics"].append(
-                {
-                    "title": title,
-                    "status": status_label,
-                    "detail": clean(row.get("detalhe_pt")) or clean(row.get("resumo_pt")),
-                    "agency": orgao,
-                    "level": criticidade_label,
-                    "change": mudanca_label,
-                    "link": clean(row.get("link_referencia")),
-                }
-            )
+        elif secao_slug == "pendencias-regulatorias-aneel":
+            result["aneelTopics"].append(item_base)
 
-        elif secao_slug == "temas-mme":
-            result["mmeTopics"].append(
-                {
-                    "title": title,
-                    "status": status_label,
-                    "detail": clean(row.get("detalhe_pt")) or clean(row.get("resumo_pt")),
-                    "agency": orgao,
-                    "level": criticidade_label,
-                    "change": mudanca_label,
-                    "link": clean(row.get("link_referencia")),
-                }
-            )
+        elif secao_slug == "pendencias-regulatorias-mme":
+            result["mmeTopics"].append(item_base)
 
-        elif secao_slug == "leiloes":
-            result["auctions"].append(
-                {
-                    "title": title,
-                    "date": format_date(row.get("prazo_data"))
-                    or format_date(row.get("data_evento")),
-                    "detail": clean(row.get("detalhe_pt")) or clean(row.get("resumo_pt")),
-                    "agency": orgao,
-                    "status": status_label,
-                    "change": mudanca_label,
-                    "link": clean(row.get("link_referencia")),
-                }
-            )
+        elif secao_slug == "temas-abertos-participacao-publica":
+            result["publicParticipation"].append(item_base)
+
+        elif secao_slug == "cronograma-proximos-leiloes":
+            result["auctions"].append(item_base)
 
         elif secao_slug == "agenda-institucional":
             event_date = parse_date(row.get("data_evento"))

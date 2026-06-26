@@ -1,20 +1,19 @@
-export default function Auctions({ data = [], onViewAll, onOpenItem }) {  return (
-    <div
-      id="auctions"
-      className="rounded-3xl bg-white p-5 shadow-sm border border-slate-100"
-    >
+export default function Auctions({ data = [], onViewAll, onOpenItem }) {
+  return (
+    <div className="h-[420px] rounded-3xl bg-white p-5 shadow-sm border border-slate-100 flex flex-col">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2b3f56] text-xs font-bold text-white">
-            06
+            07
           </div>
 
           <h2 className="text-base font-semibold text-slate-800">
-            Leilões
+            Cronograma dos Próximos Leilões
           </h2>
         </div>
 
         <button
+          type="button"
           onClick={onViewAll}
           className="text-xs font-bold text-[#3f5b70] hover:underline"
         >
@@ -22,15 +21,13 @@ export default function Auctions({ data = [], onViewAll, onOpenItem }) {  return
         </button>
       </div>
 
-      <div className="space-y-3">
-        {data.map((auction) => (
+      <div id="auctions" className="mt-2 flex-1 space-y-3 overflow-y-auto pr-1">
+        {data.map((auction, index) => (
           <button
-  key={auction.title}
-  onClick={() => onOpenItem?.(auction)}
-  className="
-              w-full rounded-2xl border border-slate-100 bg-slate-50/60
-              p-2.5 text-left transition hover:bg-white hover:shadow-sm
-            "
+            key={`${auction.title}-${index}`}
+            type="button"
+            onClick={() => onOpenItem?.(auction)}
+            className="w-full rounded-2xl border border-slate-100 bg-slate-50/60 p-2.5 text-left transition hover:bg-white hover:shadow-sm"
           >
             <h3 className="text-[13px] font-semibold leading-tight text-slate-800">
               {auction.title}
@@ -47,8 +44,8 @@ export default function Auctions({ data = [], onViewAll, onOpenItem }) {  return
                 {auction.agency || "MME"}
               </span>
 
-              <span className="text-[11px] font-semibold text-slate-500">
-                {auction.date}
+              <span className="text-xs font-bold text-[#3f5b70]">
+                Abrir →
               </span>
             </div>
           </button>

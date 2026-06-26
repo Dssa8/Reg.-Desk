@@ -18,7 +18,7 @@ export default function RegulatoryTopics({
   };
 
   const Section = ({ number, title, topics, onViewAll, onOpenItem }) => (
-    <div className="rounded-3xl bg-white p-5 shadow-sm border border-slate-100">
+    <div className="h-[460px] rounded-3xl bg-white p-5 shadow-sm border border-slate-100 flex flex-col">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2b3f56] text-xs font-bold text-white">
@@ -38,7 +38,7 @@ export default function RegulatoryTopics({
         </button>
       </div>
 
-      <div className="space-y-3">
+      <div className="mt-2 flex-1 space-y-3 overflow-y-auto pr-1">
         {topics.map((topic) => (
           <button
             key={topic.title}
@@ -99,7 +99,7 @@ export default function RegulatoryTopics({
         <div id="aneel">
           <Section
   number="04"
-  title="Temas ANEEL"
+  title="Pendências Regulatórias: ANEEL"
   topics={aneelTopics}
   onViewAll={onViewAneel}
   onOpenItem={onOpenItem}
@@ -111,7 +111,7 @@ export default function RegulatoryTopics({
         <div id="mme">
           <Section
   number="05"
-  title="Temas MME"
+  title="Pendências Regulatórias: MME"
   topics={mmeTopics}
   onViewAll={onViewMme}
   onOpenItem={onOpenItem}

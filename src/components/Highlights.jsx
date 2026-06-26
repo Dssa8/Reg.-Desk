@@ -75,7 +75,7 @@ export default function Highlights({ data = [], onViewAll }) {
                 </p>
               )}
 
-              <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2">
+              <div className="mt-auto flex items-center justify-between border-t border-slate-100 pt-2">
                 <span className="text-[11px] font-semibold text-slate-400">
                   Análise FSET
                 </span>

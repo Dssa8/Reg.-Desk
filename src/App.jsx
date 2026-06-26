@@ -15,22 +15,33 @@ function FullPage({ title, items = [], onBack }) {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const badgeClass = (value) => {
-    if (value === "Crítica" || value === "Crítico")
-      return "bg-red-100 text-red-700 border-red-200";
+  if (value === "Crítica" || value === "Crítico")
+    return "bg-red-100 text-red-700 border-red-200";
 
-    if (value === "Alta" || value === "Alto")
-      return "bg-orange-100 text-orange-700 border-orange-200";
+  if (value === "Alta" || value === "Alto")
+    return "bg-orange-100 text-orange-700 border-orange-200";
 
-    if (value === "Média" || value === "Médio")
-      return "bg-amber-100 text-amber-700 border-amber-200";
+  if (value === "Média" || value === "Médio")
+    return "bg-amber-100 text-amber-700 border-amber-200";
 
+  if (value === "Em andamento")
+    return "bg-blue-100 text-blue-700 border-blue-200";
+
+  if (value === "Iniciado")
+    return "bg-purple-100 text-purple-700 border-purple-200";
+
+  if (value === "Concluído")
     return "bg-emerald-100 text-emerald-700 border-emerald-200";
-  };
 
-  const levels = [
-    "Todos",
-    ...new Set(items.map((item) => item.level || item.impact).filter(Boolean)),
-  ];
+  return "bg-slate-100 text-slate-600 border-slate-200";
+};
+
+  const getBadgeValue = (item) => item.status || item.level || item.impact;
+
+const levels = [
+  "Todos",
+  ...new Set(items.map((item) => getBadgeValue(item)).filter(Boolean)),
+];
 
   const filteredItems = items.filter((item) => {
     const text = `${item.title || ""} ${item.summary || ""} ${
@@ -38,9 +49,9 @@ function FullPage({ title, items = [], onBack }) {
     } ${item.detail || ""}`.toLowerCase();
 
     const matchesSearch = text.includes(search.toLowerCase());
-    const itemLevel = item.level || item.impact;
-    const matchesLevel =
-      selectedLevel === "Todos" || itemLevel === selectedLevel;
+    const itemLevel = getBadgeValue(item);
+const matchesLevel =
+  selectedLevel === "Todos" || itemLevel === selectedLevel;
 
     return matchesSearch && matchesLevel;
   });
@@ -101,20 +112,20 @@ function FullPage({ title, items = [], onBack }) {
           <button
             key={`${item.title}-${index}`}
             onClick={() => setSelectedItem(item)}
-            className="flex min-h-[140px] flex-col rounded-3xl border border-slate-100 bg-white p-3 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+            className="flex h-[200px] flex-col rounded-3xl border border-slate-100 bg-white p-3 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-md"
           >
             <div className="flex items-start justify-between gap-3">
               <h2 className="text-[13px] font-semibold leading-snug text-slate-800">
                 {item.title}
               </h2>
 
-              {(item.level || item.impact) && (
+              {(getBadgeValue(item)) && (
                 <span
                   className={`shrink-0 rounded-full border px-2 py-1 text-[9px] font-bold ${badgeClass(
-                    item.level || item.impact
+                    getBadgeValue(item)
                   )}`}
                 >
-                  {item.level || item.impact}
+                  {getBadgeValue(item)}
                 </span>
               )}
             </div>
@@ -125,15 +136,23 @@ function FullPage({ title, items = [], onBack }) {
   </p>
 )}
 
-            <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2">
-              <span className="text-[11px] font-semibold text-slate-400">
-                {item.agency || "RegDesk"}
-              </span>
+            <div className="mt-auto flex items-center justify-between border-t border-slate-100 pt-2">
+  <span className="text-[11px] font-semibold text-slate-400">
+    {item.agency || "RegDesk"}
+  </span>
 
-              <span className="text-xs font-bold text-[#3f5b70]">
-                Abrir →
-              </span>
-            </div>
+  <div className="flex items-center gap-3">
+    {item.date && (
+      <span className="text-[11px] font-semibold text-slate-500">
+        {item.date}
+      </span>
+    )}
+
+    <span className="text-xs font-bold text-[#3f5b70]">
+      Abrir →
+    </span>
+  </div>
+</div>
           </button>
         ))}
       </div>
@@ -241,7 +260,7 @@ if (page === "aneel-agenda") {
   return (
     <div className="flex min-h-screen bg-slate-100">
       <Sidebar agenda={edition.agenda} />
-      <main className="flex-1 p-8">
+      <main className="min-w-0 flex-1 p-8 overflow-hidden p-8">
         <FullPage
           title="Todas as Pautas ANEEL"
           items={edition.aneelAgenda || []}
@@ -290,7 +309,7 @@ if (page === "published-rules") {
 
         <main className="flex-1 p-8">
           <FullPage
-            title="Todos os Temas ANEEL"
+            title="Todas as Pendências Regulatórias: ANEEL"
             items={edition.aneelTopics}
             onBack={() => setPage("dashboard")}
           />
@@ -306,7 +325,7 @@ if (page === "published-rules") {
 
         <main className="flex-1 p-8">
           <FullPage
-            title="Todos os Temas MME"
+            title="Todas as Pendências Regulatórias: MME"
             items={edition.mmeTopics}
             onBack={() => setPage("dashboard")}
           />
@@ -315,37 +334,37 @@ if (page === "published-rules") {
     );
   }
 
-  if (page === "consultations") {
-    return (
-      <div className="flex min-h-screen bg-slate-100">
-        <Sidebar agenda={edition.agenda} />
+  if (page === "public-participation") {
+  return (
+    <div className="flex min-h-screen bg-slate-100">
+      <Sidebar agenda={edition.agenda} />
 
-        <main className="flex-1 p-8">
-          <FullPage
-            title="Todas as Consultas Públicas"
-            items={edition.consultations}
-            onBack={() => setPage("dashboard")}
-          />
-        </main>
-      </div>
-    );
-  }
+      <main className="flex-1 p-8">
+        <FullPage
+          title="Todos os Temas Abertos para Participação Pública"
+          items={edition.publicParticipation || []}
+          onBack={() => setPage("dashboard")}
+        />
+      </main>
+    </div>
+  );
+}
 
-  if (page === "auctions") {
-    return (
-      <div className="flex min-h-screen bg-slate-100">
-        <Sidebar agenda={edition.agenda} />
+if (page === "auctions") {
+  return (
+    <div className="flex min-h-screen bg-slate-100">
+      <Sidebar agenda={edition.agenda} />
 
-        <main className="flex-1 p-8">
-          <FullPage
-            title="Todos os Leilões"
-            items={edition.auctions}
-            onBack={() => setPage("dashboard")}
-          />
-        </main>
-      </div>
-    );
-  }
+      <main className="flex-1 p-8">
+        <FullPage
+          title="Cronograma dos Próximos Leilões"
+          items={edition.auctions || []}
+          onBack={() => setPage("dashboard")}
+        />
+      </main>
+    </div>
+  );
+}
 
   if (page === "agenda") {
     return (
@@ -547,7 +566,7 @@ if (page === "published-rules") {
 <div className="mt-6 grid grid-cols-2 gap-6">
   <div
     id="aneel-agenda"
-    className="rounded-3xl bg-white p-5 shadow-sm border border-slate-100"
+    className="h-[360px] rounded-3xl bg-white p-5 shadow-sm border border-slate-100 flex flex-col"
   >
     <div className="mb-4 flex items-center justify-between">
      <div className="flex items-center gap-3">
@@ -568,9 +587,9 @@ if (page === "published-rules") {
 </button>
 </div>
 
-    <div className="space-y-3">
+    <div className="mt-2 flex-1 space-y-3 overflow-y-auto pr-1">
       {(edition.aneelAgenda || []).length > 0 ? (
-        edition.aneelAgenda.slice(0, 3).map((item, index) => (
+        (edition.aneelAgenda || []).map((item, index) => (
          <button
   key={`${item.title}-${index}`}
   onClick={() => setSelectedHomeItem(item)}
@@ -615,7 +634,7 @@ if (page === "published-rules") {
 
   <div
     id="published-rules"
-    className="rounded-3xl bg-white p-5 shadow-sm border border-slate-100"
+    className="h-[360px] rounded-3xl bg-white p-5 shadow-sm border border-slate-100 flex flex-col"
   >
     <div className="mb-4 flex items-center justify-between">
   <div className="flex items-center gap-3">
@@ -636,9 +655,9 @@ if (page === "published-rules") {
 </button>
 </div>
 
-    <div className="space-y-3">
+    <div className="mt-2 flex-1 space-y-3 overflow-y-auto pr-1">
       {(edition.publishedRules || []).length > 0 ? (
-        edition.publishedRules.slice(0, 3).map((item, index) => (
+        (edition.publishedRules || []).map((item, index) => (
   <button
     key={`${item.title}-${index}`}
     onClick={() => setSelectedHomeItem(item)}
@@ -684,8 +703,8 @@ if (page === "published-rules") {
 
 <div className="mt-6">
   <RegulatoryTopics
-    aneelTopics={edition.aneelTopics.slice(0, 5)}
-    mmeTopics={edition.mmeTopics.slice(0, 5)}
+    aneelTopics={edition.aneelTopics || []}
+  mmeTopics={edition.mmeTopics || []}
     showAneel={true}
     showMme={true}
     onViewAneel={() => setPage("aneel")}
@@ -694,12 +713,18 @@ if (page === "published-rules") {
   />
 </div>
 
-<div id="auctions" className="mt-6">
-  <Auctions
-    data={edition.auctions.slice(0, 3)}
-    onViewAll={() => setPage("auctions")}
-onOpenItem={(item) => setSelectedHomeItem(item)}
+<div className="mt-6 grid gap-6 lg:grid-cols-2">
+  <PublicParticipation
+    data={edition.publicParticipation || []}
+    onViewAll={() => setPage("public-participation")}
+    onOpenItem={(item) => setSelectedHomeItem(item)}
   />
+
+  <Auctions
+  data={edition.auctions || []}
+  onViewAll={() => setPage("auctions")}
+  onOpenItem={(item) => setSelectedHomeItem(item)}
+/>
 </div>
 {selectedHomeItem && (
   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-6">
@@ -739,4 +764,4 @@ onOpenItem={(item) => setSelectedHomeItem(item)}
   );
 }
 
-export default App;
+export default App
