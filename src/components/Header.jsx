@@ -1,4 +1,3 @@
-import cpflLogo from "../assets/cpfl.png";
 import EditionBar from "./EditionBar";
 
 function Header({
@@ -11,6 +10,8 @@ function Header({
   onOpenHistory,
   language,
   onChangeLanguage,
+  clientLogo,
+  clientName,
   t,
 }) {
   const metrics = [
@@ -66,8 +67,8 @@ function Header({
           </p>
 
           <img
-            src={cpflLogo}
-            alt="CPFL Energia"
+            src={clientLogo}
+            alt={clientName}
             className="mt-2 h-12 object-contain"
           />
 

@@ -27,16 +27,20 @@ export default function Highlights({ data = [], onViewAll, t }) {
           {t.noHighlights}
         </div>
       ) : (
-        <div className="grid items-stretch gap-4 md:grid-cols-3">
+        <div className="-mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-2">
           {data.map((item, idx) => (
-            <ItemCard
+            <div
               key={`${item.title}-${idx}`}
-              item={item}
-              onClick={() => setSelected(item)}
-              surface="page"
-              footerLeft={t.analysisFset}
-              openLabel={t.open}
-            />
+              className="w-[82%] shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-2rem)/3)]"
+            >
+              <ItemCard
+                item={item}
+                onClick={() => setSelected(item)}
+                surface="page"
+                footerLeft={t.analysisFset}
+                openLabel={t.open}
+              />
+            </div>
           ))}
         </div>
       )}

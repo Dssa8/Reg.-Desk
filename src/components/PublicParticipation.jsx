@@ -2,7 +2,7 @@ import ItemCard from "./ItemCard";
 
 export default function PublicParticipation({ data = [], onViewAll, onOpenItem, t }) {
   return (
-    <div id="public-participation" className="flex h-[420px] flex-col rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
+    <div id="public-participation" className="flex h-[360px] flex-col rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
       <div className="mb-4 flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#2b3f56] text-xs font-bold text-white">06</div>

@@ -11,7 +11,7 @@ export default function RegulatoryTopics({
   t,
 }) {
   const Section = ({ number, title, topics, onViewAll, onOpenItem }) => (
-    <div className="flex h-[460px] flex-col rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
+    <div className="flex h-[360px] flex-col rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2b3f56] text-xs font-bold text-white">

@@ -8,7 +8,9 @@ import PublicParticipation from "./components/PublicParticipation";
 import Auctions from "./components/Auctions";
 import ItemCard from "./components/ItemCard";
 import EditionBar from "./components/EditionBar";
+import Login from "./components/Login";
 
+import { getClientById } from "./clients";
 import editions from "./data/editions";
 import { UI_TEXT, localizeEdition, localizeEditionMeta } from "./i18n";
 import { getPrimaryChip, ChipList } from "./lib/chips";
@@ -208,6 +210,35 @@ function App() {
   const [selectedHomeItem, setSelectedHomeItem] = useState(null);
   const [activeEditionIndex, setActiveEditionIndex] = useState(0);
   const [language, setLanguage] = useState("pt");
+  const [client, setClient] = useState(() => {
+    try {
+      return getClientById(localStorage.getItem("regdesk_client"));
+    } catch {
+      return null;
+    }
+  });
+
+  const handleLogin = (loggedClient) => {
+    setClient(loggedClient);
+    try {
+      localStorage.setItem("regdesk_client", loggedClient.id);
+    } catch {
+      /* ignore */
+    }
+  };
+
+  const handleLogout = () => {
+    setClient(null);
+    try {
+      localStorage.removeItem("regdesk_client");
+    } catch {
+      /* ignore */
+    }
+  };
+
+  if (!client) {
+    return <Login onLogin={handleLogin} />;
+  }
 
   const t = UI_TEXT[language];
   const rawActiveEdition = editions[activeEditionIndex];
@@ -253,7 +284,7 @@ function App() {
     const [title, items] = pageConfig[page];
     return (
       <div className="flex min-h-screen bg-slate-100">
-        <Sidebar agenda={edition.agenda} t={t} onNavigate={setPage} activePage={page} />
+        <Sidebar agenda={edition.agenda} t={t} onNavigate={setPage} activePage={page} clientName={client.name} onLogout={handleLogout} />
         <main className="min-w-0 flex-1 overflow-hidden p-8">
           <FullPage
   title={title}
@@ -290,7 +321,7 @@ function App() {
 
   return (
     <div className="flex min-h-screen bg-slate-100">
-      <Sidebar agenda={edition.agenda} t={t} onNavigate={setPage} activePage={page} />
+      <Sidebar agenda={edition.agenda} t={t} onNavigate={setPage} activePage={page} clientName={client.name} onLogout={handleLogout} />
 
       {showHistory && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-6">
@@ -384,11 +415,13 @@ function App() {
             setLanguage(lang);
             setSelectedHomeItem(null);
           }}
+          clientLogo={client.logo}
+          clientName={client.name}
           t={t}
         />
 
         <div id="highlights" className="mt-6 scroll-mt-6">
-          <Highlights data={(edition.highlights || []).slice(0, 3)} onViewAll={() => setPage("highlights")} t={t} />
+          <Highlights data={edition.highlights || []} onViewAll={() => setPage("highlights")} t={t} />
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-6">

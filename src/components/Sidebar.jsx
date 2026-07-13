@@ -7,6 +7,8 @@ export default function Sidebar({
   t,
   onNavigate,
   activePage = "dashboard",
+  clientName,
+  onLogout,
 }) {
   const items = [
   ["highlights", "01", t.highlights],
@@ -195,6 +197,26 @@ export default function Sidebar({
             {t.sidebarVisionText}
           </p>
         </div>
+
+        {clientName && (
+          <button
+            type="button"
+            onClick={onLogout}
+            className="mt-4 flex w-full items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left transition hover:bg-white/10"
+          >
+            <span className="min-w-0">
+              <span className="font-body block text-[10px] uppercase tracking-[0.2em] text-slate-400">
+                {t.clientLabel}
+              </span>
+              <span className="font-heading block truncate text-[13px] text-white">
+                {clientName}
+              </span>
+            </span>
+            <span className="font-heading shrink-0 text-[12px] text-[#9FBE86]">
+              {t.logout}
+            </span>
+          </button>
+        )}
       </div>
     </aside>
   );
