@@ -1,11 +1,43 @@
 @import "tailwindcss";
+
 @font-face {
-  font-family: "TwCen";
+  font-family: "TwCenSemiBold";
   src: url("/fonts/TwCenMTStdSemiBold.otf") format("opentype");
   font-weight: 600;
-  font-style: normal;
 }
 
-.twcen {
-  font-family: "TwCen", sans-serif;
+@font-face {
+  font-family: "TwCenSemiMedium";
+  src: url("/fonts/TwCenMTStdSemiMedium.otf") format("opentype");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "TwCenLight";
+  src: url("/fonts/TwCenMTStdLight.otf") format("opentype");
+  font-weight: 300;
+}
+
+/* Texto corrido do site: Tw Cen Light por padrão */
+html,
+body {
+  font-family: "TwCenLight", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Títulos e destaques fortes */
+.font-heading {
+  font-family: "TwCenSemiBold", sans-serif;
+}
+
+/* Títulos de cards / subtítulos / ênfase média */
+.font-card-title {
+  font-family: "TwCenSemiMedium", sans-serif;
+}
+
+/* Corpo de texto */
+.font-body {
+  font-family: "TwCenLight", sans-serif;
 }

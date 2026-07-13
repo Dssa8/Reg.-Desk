@@ -6,25 +6,31 @@ import Highlights from "./components/Highlights";
 import RegulatoryTopics from "./components/RegulatoryTopics";
 import PublicParticipation from "./components/PublicParticipation";
 import Auctions from "./components/Auctions";
+import ItemCard from "./components/ItemCard";
+import EditionBar from "./components/EditionBar";
 
 import editions from "./data/editions";
 import { UI_TEXT, localizeEdition, localizeEditionMeta } from "./i18n";
+import { getPrimaryChip, ChipList } from "./lib/chips";
 
-function badgeClass(value) {
-  if (["Crítica", "Crítico", "Critical"].includes(value)) return "border-red-200 bg-red-100 text-red-700";
-  if (["Alta", "Alto", "High"].includes(value)) return "border-orange-200 bg-orange-100 text-orange-700";
-  if (["Média", "Médio", "Medium"].includes(value)) return "border-amber-200 bg-amber-100 text-amber-700";
-  if (["Em andamento", "In progress", "Aberta", "Open"].includes(value)) return "border-blue-200 bg-blue-100 text-blue-700";
-  if (["Iniciado", "Started"].includes(value)) return "border-purple-200 bg-purple-100 text-purple-700";
-  if (["Concluído", "Completed"].includes(value)) return "border-emerald-200 bg-emerald-100 text-emerald-700";
-  return "border-slate-200 bg-slate-100 text-slate-600";
-}
+// Valor do chip principal (card + filtro de nível na página completa).
+const getBadgeValue = getPrimaryChip;
 
-function getBadgeValue(item) {
-  return item.status || item.level || item.impact || "";
-}
-
-function FullPage({ title, items = [], onBack, t }) {
+function FullPage({
+  title,
+  items = [],
+  onBack,
+  t,
+  edition,
+  activeEdition,
+  hasPreviousEdition,
+  hasNextEdition,
+  onPreviousEdition,
+  onNextEdition,
+  onOpenHistory,
+  language,
+  onChangeLanguage,
+}) {
   const [search, setSearch] = useState("");
   const [selectedLevel, setSelectedLevel] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
@@ -41,67 +47,87 @@ function FullPage({ title, items = [], onBack, t }) {
 
   return (
     <div>
-      <button onClick={onBack} className="mb-5 text-xs font-bold text-[#3f5b70]">
+      <button onClick={onBack} className="font-heading mb-5 text-[14px] text-[#3f5b70]">
         {t.backToDashboard}
       </button>
 
-      <div className="rounded-3xl bg-[#2b3f56] p-6 text-white shadow-lg">
-        <p className="text-[10px] uppercase tracking-[0.3em] text-slate-300">REGDESK</p>
-        <h1 className="mt-3 text-[28px] font-semibold tracking-tight">{title}</h1>
-        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-200">{t.fullPageIntro}</p>
+      <div className="rounded-3xl bg-gradient-to-br from-[#3a5570] via-[#2b3f56] to-[#1d2b38] px-8 py-6 text-white shadow-lg">
+        <div className="mb-6">
+          <EditionBar
+            edition={edition}
+            activeEdition={activeEdition}
+            hasPreviousEdition={hasPreviousEdition}
+            hasNextEdition={hasNextEdition}
+            onPreviousEdition={onPreviousEdition}
+            onNextEdition={onNextEdition}
+            language={language}
+            onChangeLanguage={onChangeLanguage}
+            onOpenHistory={onOpenHistory}
+            t={t}
+          />
+        </div>
+
+        <p className="font-heading text-[12px] uppercase tracking-[0.3em] text-[#9FBE86]">
+          REGDESK
+        </p>
+
+        <h1 className="font-heading mt-3 text-[32px] leading-tight tracking-tight text-white">
+          {title}
+        </h1>
+
+        <p className="font-body mt-3 max-w-3xl text-[16px] leading-relaxed text-slate-300">
+          {t.fullPageIntro}
+        </p>
 
         <div className="mt-5 grid gap-4 md:grid-cols-[1fr_220px]">
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={t.searchPlaceholder}
-            className="rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm text-white outline-none placeholder:text-slate-300"
+            className="font-body rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-[15px] text-white outline-none placeholder:text-slate-300"
           />
 
           <div className="relative">
             <select
               value={selectedLevel}
               onChange={(e) => setSelectedLevel(e.target.value)}
-              className="w-full appearance-none rounded-2xl border border-white/10 bg-white/10 px-4 py-3 pr-10 text-sm text-white outline-none"
+              className="font-body w-full appearance-none rounded-2xl border border-white/10 bg-white/10 px-4 py-3 pr-10 text-[15px] text-white outline-none"
             >
               <option value="" className="text-slate-800">{t.all}</option>
               {levels.map((level) => (
                 <option key={level} value={level} className="text-slate-800">{level}</option>
               ))}
             </select>
-            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-300">▾</span>
+            <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-300">
+              ▾
+            </span>
           </div>
         </div>
       </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-3">
         {filteredItems.map((item, index) => (
-          <button
+          <ItemCard
             key={`${item.title}-${index}`}
+            item={item}
             onClick={() => setSelectedItem(item)}
-            className="flex h-[200px] flex-col rounded-3xl border border-slate-100 bg-white p-3 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <h2 className="text-[13px] font-semibold leading-snug text-slate-800">{item.title}</h2>
-              {getBadgeValue(item) && <span className={`shrink-0 rounded-full border px-2 py-1 text-[9px] font-bold ${badgeClass(getBadgeValue(item))}`}>{getBadgeValue(item)}</span>}
-            </div>
-
-            {(item.detail || item.summary || item.subtitle) && <p className="mt-2 line-clamp-3 text-[12px] leading-relaxed text-slate-600">{item.detail || item.summary || item.subtitle}</p>}
-
-            <div className="mt-auto flex items-center justify-between border-t border-slate-100 pt-2">
-              <span className="text-[11px] font-semibold text-slate-400">{item.agency || "RegDesk"}</span>
-              <div className="flex items-center gap-3">
-                {item.date && <span className="text-[11px] font-semibold text-slate-500">{item.date}</span>}
-                <span className="text-xs font-bold text-[#3f5b70]">{t.open}</span>
-              </div>
-            </div>
-          </button>
+            surface="page"
+            footerLeft={item.agency || "RegDesk"}
+            openLabel={t.open}
+            deadlineLabel={t.deadline}
+          />
         ))}
       </div>
 
-      {filteredItems.length === 0 && <div className="mt-6 rounded-3xl bg-white p-10 text-center text-sm text-slate-500">{t.noFilteredItems}</div>}
+      {filteredItems.length === 0 && (
+        <div className="font-body mt-6 rounded-3xl bg-white p-10 text-center text-[15px] text-slate-500">
+          {t.noFilteredItems}
+        </div>
+      )}
 
-      {selectedItem && <ItemModal item={selectedItem} onClose={() => setSelectedItem(null)} t={t} />}
+      {selectedItem && (
+        <ItemModal item={selectedItem} onClose={() => setSelectedItem(null)} t={t} />
+      )}
     </div>
   );
 }
@@ -112,25 +138,26 @@ function ItemModal({ item, onClose, t }) {
       <div className="max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-3xl bg-white p-6 shadow-xl">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-lg font-semibold text-slate-800">{item.title}</h2>
-            <div className="mt-3 flex flex-wrap gap-2 text-xs">
-              {item.status && <span className="rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-600">{t.status}: {item.status}</span>}
-              {(item.level || item.impact) && <span className={`rounded-full border px-2 py-1 font-semibold ${badgeClass(item.level || item.impact)}`}>{t.criticality}: {item.level || item.impact}</span>}
-              {item.deadline && <span className="rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-600">{t.deadline}: {item.deadline}</span>}
-              {item.date && <span className="rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-600">{t.date}: {item.date}</span>}
-              {item.agency && <span className="rounded-full bg-slate-100 px-2 py-1 font-semibold text-slate-600">{t.agency}: {item.agency}</span>}
-            </div>
+            <h2 className="font-heading text-lg text-slate-800">{item.title}</h2>
+            <ChipList item={item} t={t} className="mt-3" />
           </div>
 
           <button onClick={onClose} className="text-sm font-bold text-slate-400 hover:text-slate-700">✕</button>
         </div>
 
-        <p className="mt-5 whitespace-pre-line text-sm leading-relaxed text-slate-600">
+        <p className="font-body mt-5 whitespace-pre-line text-sm leading-relaxed text-slate-600">
           {item.detail || item.summary || t.textMissing}
         </p>
 
+        {item.notes && (
+          <div className="mt-4 rounded-xl border border-slate-100 bg-slate-50 px-4 py-2.5">
+            <p className="font-heading text-[10px] uppercase tracking-[0.18em] text-slate-400">{t.notes}</p>
+            <p className="font-body mt-0.5 whitespace-pre-line text-sm leading-snug text-slate-600">{item.notes}</p>
+          </div>
+        )}
+
         {item.link && (
-          <a href={item.link} target="_blank" rel="noreferrer" className="mt-6 inline-block text-sm font-bold text-[#3f5b70]">
+          <a href={item.link} target="_blank" rel="noreferrer" className="font-heading mt-6 inline-block text-sm text-[#3f5b70]">
             {t.openSource}
           </a>
         )}
@@ -145,23 +172,22 @@ function CompactSection({ id, number, title, data = [], emptyTitle, emptyDescrip
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2b3f56] text-xs font-bold text-white">{number}</div>
-          <h2 className="text-base font-semibold text-slate-800">{title}</h2>
+          <h2 className="font-heading text-base text-slate-800">{title}</h2>
         </div>
 
-        <button onClick={onViewAll} className="text-xs font-bold text-[#3f5b70] hover:underline">{t.viewAll}</button>
+        <button onClick={onViewAll} className="font-heading text-xs text-[#3f5b70] hover:underline">{t.viewAll}</button>
       </div>
 
       <div className="mt-2 flex-1 space-y-3 overflow-y-auto pr-1">
         {data.length > 0 ? (
           data.map((item, index) => (
-            <button key={`${item.title}-${index}`} onClick={() => onOpenItem(item)} className="w-full rounded-2xl border border-slate-100 bg-slate-50/60 p-3 text-left transition hover:bg-white hover:shadow-sm">
-              <h3 className="text-[13px] font-semibold leading-tight text-slate-800">{item.title}</h3>
-              {(item.detail || item.summary) && <p className="mt-1 line-clamp-2 text-[12px] leading-relaxed text-slate-600">{item.detail || item.summary}</p>}
-              <div className="mt-2 flex items-center justify-between border-t border-slate-100 pt-2">
-                <span className="text-[11px] font-semibold text-slate-400">{item.agency || defaultAgency || "RegDesk"}</span>
-                <span className="text-xs font-bold text-[#3f5b70]">{t.open}</span>
-              </div>
-            </button>
+            <ItemCard
+              key={`${item.title}-${index}`}
+              item={item}
+              onClick={() => onOpenItem(item)}
+              footerLeft={item.agency || defaultAgency || "RegDesk"}
+              openLabel={t.open}
+            />
           ))
         ) : (
           <div className="flex min-h-[150px] items-center justify-center rounded-2xl bg-slate-50 p-6 text-center">
@@ -227,9 +253,36 @@ function App() {
     const [title, items] = pageConfig[page];
     return (
       <div className="flex min-h-screen bg-slate-100">
-        <Sidebar agenda={edition.agenda} t={t} />
+        <Sidebar agenda={edition.agenda} t={t} onNavigate={setPage} activePage={page} />
         <main className="min-w-0 flex-1 overflow-hidden p-8">
-          <FullPage title={title} items={items} onBack={() => setPage("dashboard")} t={t} />
+          <FullPage
+  title={title}
+  items={items}
+  onBack={() => setPage("dashboard")}
+  t={t}
+
+  edition={edition}
+  activeEdition={activeEdition}
+
+  hasPreviousEdition={hasPreviousEdition}
+  hasNextEdition={hasNextEdition}
+
+  onOpenHistory={() => setShowHistory(true)}
+
+  onPreviousEdition={() =>
+    setActiveEditionIndex(activeEditionIndex - 1)
+  }
+
+  onNextEdition={() =>
+    setActiveEditionIndex(activeEditionIndex + 1)
+  }
+
+  language={language}
+  onChangeLanguage={(lang) => {
+    setLanguage(lang);
+    setSelectedHomeItem(null);
+  }}
+/>
         </main>
       </div>
     );
@@ -237,15 +290,15 @@ function App() {
 
   return (
     <div className="flex min-h-screen bg-slate-100">
-      <Sidebar agenda={edition.agenda} t={t} />
+      <Sidebar agenda={edition.agenda} t={t} onNavigate={setPage} activePage={page} />
 
       {showHistory && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-6">
           <div className="w-full max-w-2xl rounded-3xl bg-white p-6 shadow-xl">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h2 className="text-xl font-bold text-slate-800">{t.historyTitle}</h2>
-                <p className="mt-1 text-sm text-slate-500">{t.historyIntro}</p>
+                <h2 className="font-heading text-xl text-slate-800">{t.historyTitle}</h2>
+                <p className="font-body mt-1 text-sm text-slate-500">{t.historyIntro}</p>
               </div>
 
               <button onClick={() => setShowHistory(false)} className="text-sm font-bold text-slate-400 hover:text-slate-700">✕</button>
@@ -253,8 +306,8 @@ function App() {
 
             <div className="mt-6 rounded-3xl bg-slate-50 p-5">
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-slate-800">{historyMonth}</h3>
-                <span className="text-xs font-semibold text-slate-500">{editions.length} {t.availableEditions}</span>
+                <h3 className="font-card-title text-slate-800">{historyMonth}</h3>
+                <span className="font-body text-xs text-slate-500">{editions.length} {t.availableEditions}</span>
               </div>
 
               <div className="mt-5 grid grid-cols-7 gap-2 text-center text-xs font-bold text-slate-400">
@@ -291,7 +344,7 @@ function App() {
             </div>
 
             <div className="mt-6">
-              <h3 className="mb-3 text-sm font-bold text-slate-700">{t.latestEditions}</h3>
+              <h3 className="font-heading mb-3 text-sm text-slate-700">{t.latestEditions}</h3>
               <div className="space-y-3">
                 {localizedEditions.map((item, index) => (
                   <button
@@ -304,10 +357,10 @@ function App() {
                   >
                     <div className="flex items-center justify-between gap-4">
                       <div>
-                        <p className="font-bold text-slate-800">{item.label}</p>
-                        <p className="mt-1 text-sm text-slate-500">{item.data?.period || item.data?.month}</p>
+                        <p className="font-card-title text-slate-800">{item.label}</p>
+                        <p className="font-body mt-1 text-sm text-slate-500">{item.data?.period || item.data?.month}</p>
                       </div>
-                      <span className="text-xs font-bold text-[#3f5b70]">{t.open}</span>
+                      <span className="font-heading text-xs text-[#3f5b70]">{t.open}</span>
                     </div>
                   </button>
                 ))}
@@ -334,7 +387,7 @@ function App() {
           t={t}
         />
 
-        <div id="highlights" className="mt-5">
+        <div id="highlights" className="mt-6 scroll-mt-6">
           <Highlights data={(edition.highlights || []).slice(0, 3)} onViewAll={() => setPage("highlights")} t={t} />
         </div>
 

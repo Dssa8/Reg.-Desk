@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 from datetime import datetime, timedelta
 
@@ -8,49 +9,24 @@ INPUT_FILE = Path("input/modelo_report_regdesk_pt.xlsx")
 OUTPUT_DIR = Path("src/data")
 
 MONTHS_PT = {
-    1: "janeiro",
-    2: "fevereiro",
-    3: "março",
-    4: "abril",
-    5: "maio",
-    6: "junho",
-    7: "julho",
-    8: "agosto",
-    9: "setembro",
-    10: "outubro",
-    11: "novembro",
-    12: "dezembro",
+    1: "janeiro", 2: "fevereiro", 3: "março", 4: "abril",
+    5: "maio", 6: "junho", 7: "julho", 8: "agosto",
+    9: "setembro", 10: "outubro", 11: "novembro", 12: "dezembro",
 }
 
 MONTHS_EN = {
-    1: "January",
-    2: "February",
-    3: "March",
-    4: "April",
-    5: "May",
-    6: "June",
-    7: "July",
-    8: "August",
-    9: "September",
-    10: "October",
-    11: "November",
-    12: "December",
+    1: "January", 2: "February", 3: "March", 4: "April",
+    5: "May", 6: "June", 7: "July", 8: "August",
+    9: "September", 10: "October", 11: "November", 12: "December",
 }
 
 WEEKDAY_TO_NUMBER = {
-    "monday": 0,
-    "tuesday": 1,
-    "wednesday": 2,
-    "thursday": 3,
-    "friday": 4,
-    "saturday": 5,
-    "sunday": 6,
+    "monday": 0, "tuesday": 1, "wednesday": 2, "thursday": 3,
+    "friday": 4, "saturday": 5, "sunday": 6,
 }
 
 SHEET_NAMES = {
     "edicoes": ["01_edicoes", "Edicoes"],
-    "secoes": ["02_secoes", "Secoes"],
-    "orgaos": ["03_orgaos", "Orgaos"],
     "destaques": ["04_destaques", "Conteudos"],
     "pauta_aneel": ["05_pauta_aneel", "09_pauta_aneel"],
     "normativos": ["06_normativos_publicados", "10_normativos_publicados"],
@@ -60,6 +36,37 @@ SHEET_NAMES = {
     "leiloes_comentarios": ["07_leiloes_comentarios", "09_leiloes_comentarios"],
     "agenda": ["10_agenda", "08_agenda"],
     "opcoes": ["14_listas_controladas", "12_listas_controladas", "Opcoes"],
+}
+
+FALLBACK_OPTIONS = {
+    ("status_normativo", "published", "pt"): "Publicado",
+    ("status_normativo", "published", "en"): "Published",
+    ("status_normativo", "approved_pending_publication", "pt"): "Aprovado pendente de publicação",
+    ("status_normativo", "approved_pending_publication", "en"): "Approved pending publication",
+    ("status_normativo", "expected", "pt"): "Previsto",
+    ("status_normativo", "expected", "en"): "Expected",
+    ("status_normativo", "revoked", "pt"): "Revogado",
+    ("status_normativo", "revoked", "en"): "Revoked",
+    ("status_regulatorio", "not_started", "pt"): "Não iniciado",
+    ("status_regulatorio", "not_started", "en"): "Not started",
+    ("status_regulatorio", "started", "pt"): "Iniciado",
+    ("status_regulatorio", "started", "en"): "Started",
+    ("status_regulatorio", "in_progress", "pt"): "Em andamento",
+    ("status_regulatorio", "in_progress", "en"): "In progress",
+    ("status_regulatorio", "completed", "pt"): "Concluído",
+    ("status_regulatorio", "completed", "en"): "Completed",
+    ("status_consulta", "open", "pt"): "Aberta",
+    ("status_consulta", "open", "en"): "Open",
+    ("status_consulta", "closed", "pt"): "Encerrada",
+    ("status_consulta", "closed", "en"): "Closed",
+    ("status_leilao", "scheduled", "pt"): "Agendado",
+    ("status_leilao", "scheduled", "en"): "Scheduled",
+    ("status_leilao", "expected", "pt"): "Previsto",
+    ("status_leilao", "expected", "en"): "Expected",
+    ("status_leilao", "completed", "pt"): "Concluído",
+    ("status_leilao", "completed", "en"): "Completed",
+    ("tipo_evento", "ordinary_board_meeting", "pt"): "Reunião Ordinária da Diretoria",
+    ("tipo_evento", "ordinary_board_meeting", "en"): "Ordinary Board Meeting",
 }
 
 
@@ -73,6 +80,15 @@ def normalize_code(value):
     return clean(value).lower()
 
 
+def normalize_id(value):
+    if pd.isna(value):
+        return ""
+    try:
+        return str(int(float(value)))
+    except Exception:
+        return clean(value)
+
+
 def is_active(value):
     if pd.isna(value):
         return False
@@ -84,10 +100,17 @@ def is_active(value):
 def parse_date(value):
     if pd.isna(value) or value == "":
         return None
+
     if isinstance(value, datetime):
         return value
+
+    text = str(value).strip()
+
     try:
-        return pd.to_datetime(value, dayfirst=True).to_pydatetime()
+        if len(text) >= 10 and text[4] == "-" and text[7] == "-":
+            return pd.to_datetime(text, dayfirst=False).to_pydatetime()
+
+        return pd.to_datetime(text, dayfirst=True).to_pydatetime()
     except Exception:
         return None
 
@@ -104,6 +127,40 @@ def format_datetime(value):
     if date is None:
         return clean(value)
     return date.strftime("%d/%m/%Y às %H:%M")
+
+
+MONTH_NAME_TO_NUMBER = {name: num for num, name in MONTHS_PT.items()}
+
+
+def format_date_pt_text(value, reference_date=None):
+    """Converte datas por extenso em PT ("3 de julho", "1º de julho de 2026")
+    para dd/mm/yyyy. Usa o ano da edição quando o texto não traz o ano.
+    Mantém o texto original se não for possível interpretar."""
+    text = clean(value)
+    if not text:
+        return ""
+
+    date = parse_date(text)
+    if date is not None:
+        return date.strftime("%d/%m/%Y")
+
+    match = re.search(
+        r"(\d{1,2})\s*(?:º|°|ª)?\s*de\s+([a-zçãéíóúâê]+)(?:\s+de\s+(\d{4}))?",
+        text.strip().lower(),
+    )
+    if match:
+        day = int(match.group(1))
+        month = MONTH_NAME_TO_NUMBER.get(match.group(2))
+        year = int(match.group(3)) if match.group(3) else (
+            reference_date.year if reference_date else None
+        )
+        if month and year:
+            try:
+                return datetime(year, month, day).strftime("%d/%m/%Y")
+            except ValueError:
+                return text
+
+    return text
 
 
 def format_month(value, lang="pt"):
@@ -127,13 +184,11 @@ def format_edition_number(value, fallback=None):
 
 def build_calendar_days(reference_date):
     first_day = reference_date.replace(day=1)
-    blanks = (first_day.weekday() + 1) % 7  # Sunday-first calendar
-
+    blanks = (first_day.weekday() + 1) % 7  # domingo primeiro
     if first_day.month == 12:
         next_month = first_day.replace(year=first_day.year + 1, month=1, day=1)
     else:
         next_month = first_day.replace(month=first_day.month + 1, day=1)
-
     days_in_month = (next_month - timedelta(days=1)).day
     return [""] * blanks + [str(day) for day in range(1, days_in_month + 1)]
 
@@ -155,9 +210,30 @@ def get_bool(row, *possible_columns):
     return is_active(get_value(row, *possible_columns))
 
 
-def find_header_row(raw):
+def make_unique_headers(headers):
+    seen = {}
+    result = []
+    for header in headers:
+        name = clean(header)
+        if not name or name.lower() == "nan":
+            name = ""
+        if name in seen:
+            seen[name] += 1
+            result.append(f"{name}_{seen[name]}")
+        else:
+            seen[name] = 1
+            result.append(name)
+    return result
+
+
+def find_header_row(raw, logical_name=None):
     for i, row in raw.iterrows():
         values = [str(v).strip().lower() for v in row.tolist()]
+        if logical_name == "opcoes":
+            has_code = any(v.endswith("_code") or v in ["perfil_code", "idioma_padrao"] for v in values)
+            has_label = any(v.startswith("label_pt") or v.startswith("label_en") for v in values)
+            if has_code and has_label:
+                return i
         if "id" in values:
             return i
     return None
@@ -167,23 +243,19 @@ def read_sheet(xls, logical_name, required=True):
     for sheet_name in SHEET_NAMES[logical_name]:
         if sheet_name in xls.sheet_names:
             raw = pd.read_excel(xls, sheet_name=sheet_name, header=None)
-            header_row = find_header_row(raw)
+            header_row = find_header_row(raw, logical_name)
             if header_row is None:
                 if required:
-                    raise ValueError(f"Cabeçalho com coluna 'id' não encontrado na aba {sheet_name}")
+                    raise ValueError(f"Cabeçalho não encontrado na aba {sheet_name}")
                 return pd.DataFrame()
-
-            headers = [clean(h) for h in raw.iloc[header_row].tolist()]
-            df = raw.iloc[header_row + 1 :].copy()
+            headers = make_unique_headers(raw.iloc[header_row].tolist())
+            df = raw.iloc[header_row + 1:].copy()
             df.columns = headers
-            df = df.loc[:, [bool(str(c).strip()) and not str(c).startswith("Unnamed") for c in df.columns]]
+            df = df.loc[:, [bool(str(c).strip()) for c in df.columns]]
             df = df.dropna(how="all")
             return df
-
     if required:
-        raise ValueError(
-            f"Aba não encontrada para '{logical_name}'. Tentei: {SHEET_NAMES[logical_name]}"
-        )
+        raise ValueError(f"Aba não encontrada para '{logical_name}'. Tentei: {SHEET_NAMES[logical_name]}")
     return pd.DataFrame()
 
 
@@ -198,7 +270,8 @@ def active_rows(df):
 def filter_by_edition(df, edicao_id):
     if df.empty or "edicao_id" not in df.columns:
         return df
-    return df[df["edicao_id"].astype(str).str.strip() == str(edicao_id).strip()]
+    target = normalize_id(edicao_id)
+    return df[df["edicao_id"].apply(normalize_id) == target]
 
 
 def sort_by_order(df):
@@ -210,7 +283,7 @@ def sort_by_order(df):
 
 
 def build_option_map(opcoes):
-    option_map = {}
+    option_map = dict(FALLBACK_OPTIONS)
     if opcoes.empty:
         return option_map
 
@@ -235,13 +308,11 @@ def build_option_map(opcoes):
 
     for pos, i in enumerate(group_indexes):
         group_col = columns[i]
-        group = normalize_code(group_col)
-        next_group_i = group_indexes[pos + 1] if pos + 1 < len(group_indexes) else len(columns)
-        label_candidates = columns[i + 1 : next_group_i]
-
-        label_pt_col = next((c for c in label_candidates if normalize_code(c).startswith("label_pt")), None)
-        label_en_col = next((c for c in label_candidates if normalize_code(c).startswith("label_en")), None)
-
+        group = normalize_code(group_col).replace("_code", "")
+        next_i = group_indexes[pos + 1] if pos + 1 < len(group_indexes) else len(columns)
+        candidates = columns[i + 1: next_i]
+        label_pt_col = next((c for c in candidates if normalize_code(c).startswith("label_pt")), None)
+        label_en_col = next((c for c in candidates if normalize_code(c).startswith("label_en")), None)
         for _, row in opcoes.iterrows():
             code = normalize_code(row.get(group_col))
             if not code:
@@ -250,10 +321,9 @@ def build_option_map(opcoes):
             label_en = clean(row.get(label_en_col)) if label_en_col else label_pt
             label_pt = label_pt or code
             label_en = label_en or label_pt
-            for key in [group, group.replace("_code", "")]:
+            for key in [group, f"{group}_code"]:
                 option_map[(key, code, "pt")] = label_pt
                 option_map[(key, code, "en")] = label_en
-
     return option_map
 
 
@@ -261,25 +331,25 @@ def label(option_map, grupo, code, lang="pt"):
     code = normalize_code(code)
     if not code:
         return ""
-    return option_map.get((grupo, code, lang), option_map.get((grupo + "_code", code, lang), code))
+    grupo = normalize_code(grupo).replace("_code", "")
+    return option_map.get((grupo, code, lang), option_map.get((f"{grupo}_code", code, lang), code))
 
 
-def bilingual_item(
-    row,
-    title_pt="",
-    title_en="",
-    detail_pt="",
-    detail_en="",
-    summary_pt="",
-    summary_en="",
-):
+def set_bilingual_label(item, field, pt, en=None):
+    pt = clean(pt)
+    en = clean(en) or pt
+    item[field] = pt
+    item[f"{field}_pt"] = pt
+    item[f"{field}_en"] = en
+
+
+def bilingual_item(row, title_pt="", title_en="", detail_pt="", detail_en="", summary_pt="", summary_en=""):
     title_pt = clean(title_pt)
     title_en = clean(title_en) or title_pt
     detail_pt = clean(detail_pt)
     detail_en = clean(detail_en) or detail_pt
     summary_pt = clean(summary_pt)
     summary_en = clean(summary_en) or summary_pt
-
     return {
         "title": title_pt,
         "title_pt": title_pt,
@@ -311,14 +381,6 @@ def bilingual_item(
         "link": get_text(row, "link_referencia"),
         "tags": get_text(row, "tags"),
     }
-
-
-def set_bilingual_label(item, field, pt, en=None):
-    pt = clean(pt)
-    en = clean(en) or pt
-    item[field] = pt
-    item[f"{field}_pt"] = pt
-    item[f"{field}_en"] = en
 
 
 def build_highlights(df):
@@ -395,6 +457,7 @@ def build_normativos(df, option_map):
         set_bilingual_label(item, "status", label(option_map, "status_normativo", status_code, "pt"), label(option_map, "status_normativo", status_code, "en"))
         item["date"] = format_date(get_value(row, "data_publicacao", "data_evento"))
         set_bilingual_label(item, "type", label(option_map, "tipo_normativo", tipo_code, "pt") or tipo_code, label(option_map, "tipo_normativo", tipo_code, "en") or tipo_code)
+        set_bilingual_label(item, "notes", get_text(row, "observacoes"), get_text(row, "observacoes_en"))
         items.append(item)
     return items
 
@@ -444,7 +507,7 @@ def build_consultas(df, option_map):
     return items
 
 
-def build_leiloes(df, option_map, comentarios_df=None, edicao_id=None):
+def build_leiloes(df, option_map, comentarios_df=None, edicao_id=None, reference_date=None):
     items = []
     for _, row in sort_by_order(active_rows(df)).iterrows():
         title_pt = get_text(row, "titulo_pt", "tipo_leilao_pt")
@@ -469,9 +532,11 @@ def build_leiloes(df, option_map, comentarios_df=None, edicao_id=None):
             summary_en=step_en,
         )
         set_bilingual_label(item, "status", label(option_map, "status_leilao", status_code, "pt"), label(option_map, "status_leilao", status_code, "en"))
-        item["date"] = get_text(row, "data_estimada_pt") or format_date(get_value(row, "data_estimada"))
-        item["date_pt"] = get_text(row, "data_estimada_pt") or item["date"]
-        item["date_en"] = get_text(row, "data_estimada_en") or item["date"]
+        raw_date = get_text(row, "data_estimada_pt") or get_text(row, "data_estimada_en")
+        estimated_date = format_date_pt_text(raw_date, reference_date) or format_date(get_value(row, "data_estimada"))
+        item["date"] = estimated_date
+        item["date_pt"] = estimated_date
+        item["date_en"] = estimated_date
         set_bilingual_label(item, "type", "Leilão", "Auction")
         items.append(item)
 
@@ -528,10 +593,9 @@ def recurrence_dates(row, reference_date):
 
     tipo_agenda_code = normalize_code(get_value(row, "tipo_agenda_code"))
     if tipo_agenda_code != "recurring" and not get_bool(row, "recorrente"):
-        # Some rows use data_inicio/data_fim as exact dates for calendar-specific events.
         for col in ["data_inicio", "data_fim"]:
             d = parse_date(get_value(row, col))
-            if d is not None and d == parse_date(get_value(row, "data_inicio")):
+            if d is not None:
                 dates.append(d)
         return sorted(set(dates))
 
@@ -590,11 +654,9 @@ def build_agenda(df, data_edicao, option_map):
         title_pt = get_text(row, "titulo_pt")
         if not title_pt:
             continue
-
         tipo_evento_code = get_text(row, "tipo_evento_code", "subtipo_code")
         dates = recurrence_dates(row, data_edicao)
         display_dates = [d.strftime("%d/%m/%Y") for d in dates]
-
         for d in dates:
             if d.month == data_edicao.month and d.year == data_edicao.year:
                 day = str(d.day)
@@ -632,41 +694,6 @@ def build_agenda(df, data_edicao, option_map):
     return agenda
 
 
-def build_available_editions(edicoes):
-    items = []
-    edicoes = active_rows(edicoes)
-    if "data_edicao" in edicoes.columns:
-        edicoes = edicoes.sort_values(by="data_edicao", ascending=False)
-
-    for index, row in edicoes.iterrows():
-        data_edicao = parse_date(row.get("data_edicao"))
-        if data_edicao is None:
-            continue
-        edition_date = data_edicao.strftime("%Y-%m-%d")
-        edition_number = format_edition_number(get_value(row, "numero_edicao", default=index + 1))
-        edicao_id = get_text(row, "id") or f"ed_{edition_date}"
-        label_pt = f"Edição #{edition_number}" if edition_number else get_text(row, "titulo_pt")
-        label_en = f"Edition #{edition_number}" if edition_number else get_text(row, "titulo_en") or label_pt
-        items.append(
-            {
-                "id": edicao_id,
-                "edition": edition_date,
-                "editionNumber": edition_number,
-                "label": label_pt,
-                "label_pt": label_pt,
-                "label_en": label_en,
-                "title_pt": get_text(row, "titulo_pt"),
-                "title_en": get_text(row, "titulo_en") or get_text(row, "titulo_pt"),
-                "summary_pt": get_text(row, "resumo_pt"),
-                "summary_en": get_text(row, "resumo_en") or get_text(row, "resumo_pt"),
-                "month_pt": format_month(data_edicao, "pt"),
-                "month_en": format_month(data_edicao, "en"),
-                "status": get_text(row, "status_edicao_code", "status_code"),
-            }
-        )
-    return items
-
-
 def build_result_for_edition(edicao, edicao_index, dfs, option_map):
     data_edicao = parse_date(edicao["data_edicao"])
     if data_edicao is None:
@@ -674,14 +701,18 @@ def build_result_for_edition(edicao, edicao_index, dfs, option_map):
 
     edicao_id = get_text(edicao, "id")
     edition_date = data_edicao.strftime("%Y-%m-%d")
-    edition_number = format_edition_number(
-        get_value(edicao, "numero_edicao", default=edicao_index + 1)
-    )
+    edition_number = format_edition_number(get_value(edicao, "numero_edicao", default=edicao_index + 1))
 
     period_start = format_date(get_value(edicao, "periodo_inicio"))
     period_end = format_date(get_value(edicao, "periodo_fim"))
-    period = f"{period_start} a {period_end}" if period_start and period_end else format_month(data_edicao, "pt")
-    period_en = f"{period_start} to {period_end}" if period_start and period_end else format_month(data_edicao, "en")
+    if not period_start or not period_end:
+        monday = data_edicao - timedelta(days=data_edicao.weekday())
+        friday = data_edicao
+        period_start = monday.strftime("%d/%m/%Y")
+        period_end = friday.strftime("%d/%m/%Y")
+    period = f"{period_start} a {period_end}"
+    period_en = f"{period_start} to {period_end}"
+
     updated_at = format_datetime(get_value(edicao, "updated_at", "publicada_em"))
 
     pendencias = filter_by_edition(dfs["pendencias"], edicao_id)
@@ -695,11 +726,9 @@ def build_result_for_edition(edicao, edicao_index, dfs, option_map):
 
     agenda_df = filter_by_edition(dfs["agenda"], edicao_id)
     if agenda_df.empty and not dfs["agenda"].empty:
-        # For the MVP, the institutional calendar can be maintained once per month.
-        # If an edition has no agenda rows, reuse the general agenda rows available in the workbook.
         agenda_df = dfs["agenda"]
 
-    result = {
+    return {
         "edition": edition_date,
         "editionNumber": edition_number,
         "editionId": edicao_id or f"cpfl-{edition_number}",
@@ -725,15 +754,9 @@ def build_result_for_edition(edicao, edicao_index, dfs, option_map):
         "aneelTopics": build_pendencias(aneel_topics, option_map),
         "mmeTopics": build_pendencias(mme_topics, option_map),
         "publicParticipation": build_consultas(filter_by_edition(dfs["consultas"], edicao_id), option_map),
-        "auctions": build_leiloes(
-            filter_by_edition(dfs["leiloes"], edicao_id),
-            option_map,
-            comentarios_df=dfs.get("leiloes_comentarios"),
-            edicao_id=edicao_id,
-        ),
+        "auctions": build_leiloes(filter_by_edition(dfs["leiloes"], edicao_id), option_map, comentarios_df=dfs.get("leiloes_comentarios"), edicao_id=edicao_id, reference_date=data_edicao),
         "agenda": build_agenda(agenda_df, data_edicao, option_map),
     }
-    return result
 
 
 def js_string(value):
@@ -745,7 +768,6 @@ def write_editions_js(available_editions, output_dir):
     for item in available_editions:
         var_name = "edition" + item["edition"].replace("-", "")
         lines.append(f'import {var_name} from "./edition-{item["edition"]}.json";')
-
     lines.append("\nconst editions = [")
     for item in available_editions:
         var_name = "edition" + item["edition"].replace("-", "")
@@ -759,7 +781,6 @@ def write_editions_js(available_editions, output_dir):
         lines.append("  },")
     lines.append("];\n")
     lines.append("export default editions;\n")
-
     (output_dir / "editions.js").write_text("\n".join(lines), encoding="utf-8")
 
 
@@ -770,7 +791,6 @@ def main():
     xls = pd.ExcelFile(INPUT_FILE)
     edicoes = read_sheet(xls, "edicoes")
     opcoes = read_sheet(xls, "opcoes", required=False)
-
     dfs = {
         "destaques": read_sheet(xls, "destaques", required=False),
         "pauta_aneel": read_sheet(xls, "pauta_aneel", required=False),
@@ -797,34 +817,28 @@ def main():
         status = get_text(edicao, "status_edicao_code", "status_code")
         if status and normalize_code(status) not in ["published", "publicada"]:
             continue
-
         data_edicao = parse_date(edicao.get("data_edicao"))
         if data_edicao is None:
-            print(f"Edição ignorada por falta de data: linha {index + 2}")
+            print(f"Edição ignorada por falta de data: índice {index}")
             continue
 
         result = build_result_for_edition(edicao, index, dfs, option_map)
-        edition_date = data_edicao.strftime("%Y-%m-%d")
-        output_file = OUTPUT_DIR / f"edition-{edition_date}.json"
+        output_file = OUTPUT_DIR / f"edition-{result['edition']}.json"
         with output_file.open("w", encoding="utf-8") as f:
             json.dump(result, f, ensure_ascii=False, indent=2)
         print(f"JSON criado com sucesso: {output_file}")
 
-        available_editions.append(
-            {
-                "id": result["editionId"],
-                "edition": result["edition"],
-                "editionNumber": result["editionNumber"],
-                "label_pt": f"Edição #{result['editionNumber']}",
-                "label_en": f"Edition #{result['editionNumber']}",
-            }
-        )
+        available_editions.append({
+            "id": result["editionId"],
+            "edition": result["edition"],
+            "editionNumber": result["editionNumber"],
+            "label_pt": f"Edição #{result['editionNumber']}",
+            "label_en": f"Edition #{result['editionNumber']}",
+        })
 
     available_editions = sorted(available_editions, key=lambda x: x["edition"], reverse=True)
-
     with (OUTPUT_DIR / "editions.json").open("w", encoding="utf-8") as f:
         json.dump(available_editions, f, ensure_ascii=False, indent=2)
-
     write_editions_js(available_editions, OUTPUT_DIR)
     print(f"Índice criado com sucesso: {OUTPUT_DIR / 'editions.js'}")
 

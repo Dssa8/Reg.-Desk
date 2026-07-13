@@ -14,12 +14,12 @@ const month = data?.month || "";
             06
           </div>
 
-          <h2 className="text-xl font-bold text-slate-800">
+          <h2 className="font-heading text-xl text-slate-800">
             Agenda
           </h2>
         </div>
 
-        <span className="text-sm text-slate-500">
+        <span className="font-body text-sm text-slate-500">
           {month}
         </span>
       </div>
@@ -65,7 +65,7 @@ const month = data?.month || "";
   {events.map((event) => (
     <div
       key={`${event.title}-${event.date}`}
-      className="flex items-center gap-2 text-sm text-slate-700"
+      className="font-body flex items-center gap-2 text-sm text-slate-700"
     >
       <div className="w-2.5 h-2.5 rounded-full bg-slate-800"></div>
       <span>
