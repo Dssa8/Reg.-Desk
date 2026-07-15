@@ -1,5 +1,12 @@
 [
   {
+    "id": "3",
+    "edition": "2026-07-03",
+    "editionNumber": "007",
+    "label_pt": "Edição #007",
+    "label_en": "Edition #007"
+  },
+  {
     "id": "2",
     "edition": "2026-06-26",
     "editionNumber": "006",

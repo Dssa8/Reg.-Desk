@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 import pandas as pd
 
-INPUT_FILE = Path("input/modelo_report_regdesk_pt.xlsx")
+INPUT_FILE = Path("input/modelo_report_regdesk.xlsx")
 OUTPUT_DIR = Path("src/data")
 
 MONTHS_PT = {
