@@ -1580,9 +1580,9 @@
         "weekdayOrder": "All",
         "startDate": "01/06/2026",
         "endDate": "30/06/2026",
-        "recurrenceDescription": "",
-        "recurrenceDescription_pt": "",
-        "recurrenceDescription_en": "",
+        "recurrenceDescription": "Todas as sextas-feiras do mês",
+        "recurrenceDescription_pt": "Todas as sextas-feiras do mês",
+        "recurrenceDescription_en": "Every Friday of the month",
         "displayDates": [
           "05/06/2026",
           "12/06/2026",
@@ -1607,9 +1607,9 @@
         "weekdayOrder": "All",
         "startDate": "01/07/2026",
         "endDate": "31/07/2026",
-        "recurrenceDescription": "",
-        "recurrenceDescription_pt": "",
-        "recurrenceDescription_en": "",
+        "recurrenceDescription": "Todas as sextas-feiras do mês",
+        "recurrenceDescription_pt": "Todas as sextas-feiras do mês",
+        "recurrenceDescription_en": "Every Friday of the month",
         "displayDates": []
       },
       {
@@ -1629,9 +1629,9 @@
         "weekdayOrder": "",
         "startDate": "01/06/2026",
         "endDate": "01/06/2026",
-        "recurrenceDescription": "",
-        "recurrenceDescription_pt": "",
-        "recurrenceDescription_en": "",
+        "recurrenceDescription": "Conforme calendário específico do órgão",
+        "recurrenceDescription_pt": "Conforme calendário específico do órgão",
+        "recurrenceDescription_en": "According to the specific calendar of the agency",
         "displayDates": [
           "01/06/2026"
         ]
@@ -1653,9 +1653,9 @@
         "weekdayOrder": "",
         "startDate": "17/06/2026",
         "endDate": "17/06/2026",
-        "recurrenceDescription": "",
-        "recurrenceDescription_pt": "",
-        "recurrenceDescription_en": "",
+        "recurrenceDescription": "Conforme calendário específico do órgão",
+        "recurrenceDescription_pt": "Conforme calendário específico do órgão",
+        "recurrenceDescription_en": "According to the specific calendar of the agency",
         "displayDates": []
       },
       {
@@ -1675,9 +1675,9 @@
         "weekdayOrder": "",
         "startDate": "01/07/2026",
         "endDate": "31/07/2026",
-        "recurrenceDescription": "",
-        "recurrenceDescription_pt": "",
-        "recurrenceDescription_en": "",
+        "recurrenceDescription": "Conforme calendário específico do órgão",
+        "recurrenceDescription_pt": "Conforme calendário específico do órgão",
+        "recurrenceDescription_en": "According to the specific calendar of the agency",
         "displayDates": [
           "01/07/2026",
           "31/07/2026"
@@ -1700,9 +1700,9 @@
         "weekdayOrder": "",
         "startDate": "10/06/2026",
         "endDate": "10/06/2026",
-        "recurrenceDescription": "",
-        "recurrenceDescription_pt": "",
-        "recurrenceDescription_en": "",
+        "recurrenceDescription": "Conforme calendário específico do órgão",
+        "recurrenceDescription_pt": "Conforme calendário específico do órgão",
+        "recurrenceDescription_en": "According to the specific calendar of the agency",
         "displayDates": [
           "10/06/2026"
         ]
@@ -1724,9 +1724,9 @@
         "weekdayOrder": "All",
         "startDate": "01/07/2026",
         "endDate": "31/07/2026",
-        "recurrenceDescription": "",
-        "recurrenceDescription_pt": "",
-        "recurrenceDescription_en": "",
+        "recurrenceDescription": "Todas as terças-feiras do mês",
+        "recurrenceDescription_pt": "Todas as terças-feiras do mês",
+        "recurrenceDescription_en": "Every Tuesday of the month",
         "displayDates": []
       },
       {
@@ -1746,9 +1746,9 @@
         "weekdayOrder": "All",
         "startDate": "01/06/2026",
         "endDate": "30/06/2026",
-        "recurrenceDescription": "",
-        "recurrenceDescription_pt": "",
-        "recurrenceDescription_en": "",
+        "recurrenceDescription": "Todas as terças-feiras do mês",
+        "recurrenceDescription_pt": "Todas as terças-feiras do mês",
+        "recurrenceDescription_en": "Every Tuesday of the month",
         "displayDates": [
           "02/06/2026",
           "09/06/2026",
@@ -1774,9 +1774,9 @@
         "weekdayOrder": "",
         "startDate": "",
         "endDate": "",
-        "recurrenceDescription": "",
-        "recurrenceDescription_pt": "",
-        "recurrenceDescription_en": "",
+        "recurrenceDescription": "Conforme calendário específico do órgão",
+        "recurrenceDescription_pt": "Conforme calendário específico do órgão",
+        "recurrenceDescription_en": "According to the specific calendar of the agency",
         "displayDates": []
       },
       {
@@ -1796,9 +1796,9 @@
         "weekdayOrder": "",
         "startDate": "11/06/2026",
         "endDate": "11/06/2026",
-        "recurrenceDescription": "",
-        "recurrenceDescription_pt": "",
-        "recurrenceDescription_en": "",
+        "recurrenceDescription": "Conforme calendário específico do órgão",
+        "recurrenceDescription_pt": "Conforme calendário específico do órgão",
+        "recurrenceDescription_en": "According to the specific calendar of the agency",
         "displayDates": [
           "11/06/2026"
         ]

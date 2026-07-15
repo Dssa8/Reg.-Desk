@@ -667,8 +667,8 @@ def build_agenda(df, data_edicao, option_map):
                     agenda["eventDays"].append(day)
 
         event_date = parse_date(get_value(row, "data_evento"))
-        desc_pt = get_text(row, "descricao_recorrencia_pt", "descricao")
-        desc_en = get_text(row, "descricao_recorrencia_en") or desc_pt
+        desc_pt = get_text(row, "descricao_pt", "descricao_recorrencia_pt", "descricao")
+        desc_en = get_text(row, "descricao_en", "descricao_recorrencia_en") or desc_pt
         event = {
             "title": title_pt,
             "title_pt": title_pt,
