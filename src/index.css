@@ -18,6 +18,12 @@
   font-weight: 300;
 }
 
+/* Reserva sempre o espaço da barra de rolagem para a largura não mudar
+   entre edições/páginas (com ou sem scroll) */
+html {
+  scrollbar-gutter: stable;
+}
+
 /* Texto corrido do site: Tw Cen Light por padrão */
 html,
 body {
@@ -25,6 +31,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+/* Aumenta toda a interface proporcionalmente (texto + espaçamentos) */
+body {
+  zoom: 1.2;
 }
 
 /* Títulos e destaques fortes */

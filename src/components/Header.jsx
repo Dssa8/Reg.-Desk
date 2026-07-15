@@ -30,8 +30,8 @@ function Header({
   };
 
   return (
-    <header className="rounded-3xl bg-gradient-to-br from-[#3a5570] via-[#2b3f56] to-[#1d2b38] px-8 py-6 text-white shadow-lg">
-      <div className="mb-6">
+    <header className="rounded-3xl bg-gradient-to-br from-[#3a5570] via-[#2b3f56] to-[#1d2b38] px-8 pt-4 pb-2 text-white shadow-lg">
+      <div className="mb-3">
         <EditionBar
           edition={edition}
           activeEdition={activeEdition}
@@ -52,11 +52,11 @@ function Header({
             REGDESK
           </p>
 
-          <h1 className="font-heading mt-3 text-[32px] leading-tight tracking-tight text-white">
+          <h1 className="font-heading mt-1 text-[32px] leading-tight tracking-tight text-white">
             {t.dashboardTitle}
           </h1>
 
-          <p className="font-body mt-3 max-w-3xl text-[16px] leading-relaxed text-slate-300">
+          <p className="font-body mt-1.5 max-w-3xl text-[16px] leading-relaxed text-slate-300">
             {t.dashboardSubtitle}
           </p>
         </div>
@@ -69,10 +69,10 @@ function Header({
           <img
             src={clientLogo}
             alt={clientName}
-            className="mt-2 h-12 object-contain"
+            className="mt-1 h-11 object-contain"
           />
 
-          <div className="mt-4">
+          <div className="mt-2">
             <p className="font-heading text-[10px] uppercase tracking-[0.25em] text-slate-400">
               {t.lastUpdated}
             </p>
@@ -84,7 +84,7 @@ function Header({
         </div>
       </div>
 
-      <div className="mt-5 grid grid-cols-3 gap-x-4 gap-y-4 border-t border-white/10 pt-4 sm:grid-cols-4 lg:grid-cols-7">
+      <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-3 border-t border-white/10 pt-2 sm:grid-cols-4 lg:grid-cols-7">
         {metrics.map((metric) => (
           <button
             key={metric.id}
@@ -95,7 +95,7 @@ function Header({
             <p className="font-heading text-[24px] leading-none text-white transition group-hover:text-[#9FBE86]">
               {metric.value}
             </p>
-            <p className="font-body mt-1.5 text-[10px] uppercase tracking-[0.12em] text-slate-400 transition group-hover:text-slate-200">
+            <p className="font-body mt-1.5 text-[10px] uppercase leading-none tracking-[0.12em] text-slate-400 transition group-hover:text-slate-200">
               {metric.label}
             </p>
           </button>

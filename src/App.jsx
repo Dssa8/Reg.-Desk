@@ -13,7 +13,7 @@ import Login from "./components/Login";
 import { getClientById } from "./clients";
 import editions from "./data/editions";
 import { UI_TEXT, localizeEdition, localizeEditionMeta } from "./i18n";
-import { getPrimaryChip, ChipList } from "./lib/chips";
+import { getPrimaryChip, ChipList, sortByStatus } from "./lib/chips";
 
 // Valor do chip principal (card + filtro de nível na página completa).
 const getBadgeValue = getPrimaryChip;
@@ -37,7 +37,7 @@ function FullPage({
   const [selectedLevel, setSelectedLevel] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const levels = [...new Set(items.map((item) => getBadgeValue(item)).filter(Boolean))];
+  const levels = [...new Set(items.filter((item) => item.kind !== "comment").map((item) => getBadgeValue(item)).filter(Boolean))];
 
   const filteredItems = items.filter((item) => {
     const text = `${item.title || ""} ${item.summary || ""} ${item.subtitle || ""} ${item.detail || ""}`.toLowerCase();
@@ -47,14 +47,17 @@ function FullPage({
     return matchesSearch && matchesLevel;
   });
 
+  const cardItems = sortByStatus(filteredItems.filter((item) => item.kind !== "comment"));
+  const commentItems = filteredItems.filter((item) => item.kind === "comment");
+
   return (
     <div>
-      <button onClick={onBack} className="font-heading mb-5 text-[14px] text-[#3f5b70]">
+      <button onClick={onBack} className="font-heading mb-3 text-[14px] text-[#3f5b70]">
         {t.backToDashboard}
       </button>
 
-      <div className="rounded-3xl bg-gradient-to-br from-[#3a5570] via-[#2b3f56] to-[#1d2b38] px-8 py-6 text-white shadow-lg">
-        <div className="mb-6">
+      <div className="rounded-3xl bg-gradient-to-br from-[#3a5570] via-[#2b3f56] to-[#1d2b38] px-8 py-4 text-white shadow-lg">
+        <div className="mb-3">
           <EditionBar
             edition={edition}
             activeEdition={activeEdition}
@@ -73,15 +76,15 @@ function FullPage({
           REGDESK
         </p>
 
-        <h1 className="font-heading mt-3 text-[32px] leading-tight tracking-tight text-white">
+        <h1 className="font-heading mt-1 text-[32px] leading-tight tracking-tight text-white">
           {title}
         </h1>
 
-        <p className="font-body mt-3 max-w-3xl text-[16px] leading-relaxed text-slate-300">
+        <p className="font-body mt-1.5 max-w-3xl text-[16px] leading-relaxed text-slate-300">
           {t.fullPageIntro}
         </p>
 
-        <div className="mt-5 grid gap-4 md:grid-cols-[1fr_220px]">
+        <div className="mt-4 grid gap-4 md:grid-cols-[1fr_220px]">
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -108,7 +111,7 @@ function FullPage({
       </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-3">
-        {filteredItems.map((item, index) => (
+        {cardItems.map((item, index) => (
           <ItemCard
             key={`${item.title}-${index}`}
             item={item}
@@ -126,6 +129,22 @@ function FullPage({
           {t.noFilteredItems}
         </div>
       )}
+
+      {commentItems.map((comment, index) => (
+        <button
+          key={`comment-${index}`}
+          type="button"
+          onClick={() => setSelectedItem(comment)}
+          className="mt-4 block w-full rounded-3xl border border-slate-100 bg-white p-5 text-left shadow-sm transition hover:shadow-md"
+        >
+          <p className="font-heading text-[13px] font-semibold leading-tight text-slate-800">
+            {comment.title}
+          </p>
+          <p className="font-body mt-2 line-clamp-3 text-[12px] leading-relaxed text-slate-600">
+            {comment.detail || comment.summary}
+          </p>
+        </button>
+      ))}
 
       {selectedItem && (
         <ItemModal item={selectedItem} onClose={() => setSelectedItem(null)} t={t} />
@@ -246,8 +265,12 @@ function App() {
   const activeEdition = localizeEditionMeta(rawActiveEdition, language);
   const localizedEditions = editions.map((item) => ({ ...localizeEditionMeta(item, language), data: localizeEdition(item.data, language) }));
 
-  const hasPreviousEdition = activeEditionIndex > 0;
-  const hasNextEdition = activeEditionIndex < editions.length - 1;
+  // Edições ordenadas da mais nova (índice 0) para a mais antiga.
+  // Anterior (‹) = edição mais antiga (índice maior); Próxima (›) = mais nova (índice menor).
+  const hasPreviousEdition = activeEditionIndex < editions.length - 1;
+  const hasNextEdition = activeEditionIndex > 0;
+  const goToPreviousEdition = () => setActiveEditionIndex(activeEditionIndex + 1);
+  const goToNextEdition = () => setActiveEditionIndex(activeEditionIndex - 1);
 
   const buildHistoryCalendarDays = () => {
     const reference = new Date(`${activeEdition.date}T00:00:00`);
@@ -285,7 +308,7 @@ function App() {
     return (
       <div className="flex min-h-screen bg-slate-100">
         <Sidebar agenda={edition.agenda} t={t} onNavigate={setPage} activePage={page} clientName={client.name} onLogout={handleLogout} />
-        <main className="min-w-0 flex-1 overflow-hidden p-8">
+        <main className="min-w-0 flex-1 overflow-hidden px-5 py-5">
           <FullPage
   title={title}
   items={items}
@@ -300,13 +323,9 @@ function App() {
 
   onOpenHistory={() => setShowHistory(true)}
 
-  onPreviousEdition={() =>
-    setActiveEditionIndex(activeEditionIndex - 1)
-  }
+  onPreviousEdition={goToPreviousEdition}
 
-  onNextEdition={() =>
-    setActiveEditionIndex(activeEditionIndex + 1)
-  }
+  onNextEdition={goToNextEdition}
 
   language={language}
   onChangeLanguage={(lang) => {
@@ -401,14 +420,14 @@ function App() {
         </div>
       )}
 
-      <main className="flex-1 p-8">
+      <main className="min-w-0 flex-1 overflow-hidden px-5 py-5">
         <Header
           edition={edition}
           activeEdition={activeEdition}
           hasPreviousEdition={hasPreviousEdition}
           hasNextEdition={hasNextEdition}
-          onPreviousEdition={() => setActiveEditionIndex(activeEditionIndex - 1)}
-          onNextEdition={() => setActiveEditionIndex(activeEditionIndex + 1)}
+          onPreviousEdition={goToPreviousEdition}
+          onNextEdition={goToNextEdition}
           onOpenHistory={() => setShowHistory(true)}
           language={language}
           onChangeLanguage={(lang) => {
@@ -420,16 +439,16 @@ function App() {
           t={t}
         />
 
-        <div id="highlights" className="mt-6 scroll-mt-6">
-          <Highlights data={edition.highlights || []} onViewAll={() => setPage("highlights")} t={t} />
+        <div id="highlights" className="mt-4 scroll-mt-6">
+          <Highlights data={sortByStatus(edition.highlights || [])} onViewAll={() => setPage("highlights")} t={t} />
         </div>
 
-        <div className="mt-6 grid grid-cols-2 gap-6">
+        <div className="mt-4 grid grid-cols-2 gap-6">
           <CompactSection
             id="aneel-agenda"
             number="02"
             title={t.aneelAgenda}
-            data={edition.aneelAgenda || []}
+            data={sortByStatus(edition.aneelAgenda || [])}
             emptyTitle={t.noAgendaItems}
             emptyDescription={t.noAgendaItemsDesc}
             onViewAll={() => setPage("aneel-agenda")}
@@ -442,7 +461,7 @@ function App() {
             id="published-rules"
             number="03"
             title={t.publishedRules}
-            data={edition.publishedRules || []}
+            data={sortByStatus(edition.publishedRules || [])}
             emptyTitle={t.noPublishedRules}
             emptyDescription={t.noPublishedRulesDesc}
             onViewAll={() => setPage("published-rules")}
@@ -451,10 +470,10 @@ function App() {
           />
         </div>
 
-        <div className="mt-6">
+        <div className="mt-4">
           <RegulatoryTopics
-            aneelTopics={edition.aneelTopics || []}
-            mmeTopics={edition.mmeTopics || []}
+            aneelTopics={sortByStatus(edition.aneelTopics || [])}
+            mmeTopics={sortByStatus(edition.mmeTopics || [])}
             showAneel={true}
             showMme={true}
             onViewAneel={() => setPage("aneel")}
@@ -464,9 +483,9 @@ function App() {
           />
         </div>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-2">
-          <PublicParticipation data={edition.publicParticipation || []} onViewAll={() => setPage("public-participation")} onOpenItem={(item) => setSelectedHomeItem(item)} t={t} />
-          <Auctions data={edition.auctions || []} onViewAll={() => setPage("auctions")} onOpenItem={(item) => setSelectedHomeItem(item)} t={t} />
+        <div className="mt-4 grid gap-6 lg:grid-cols-2">
+          <PublicParticipation data={sortByStatus(edition.publicParticipation || [])} onViewAll={() => setPage("public-participation")} onOpenItem={(item) => setSelectedHomeItem(item)} t={t} />
+          <Auctions data={sortByStatus(edition.auctions || [])} onViewAll={() => setPage("auctions")} onOpenItem={(item) => setSelectedHomeItem(item)} t={t} />
         </div>
 
         {selectedHomeItem && <ItemModal item={selectedHomeItem} onClose={() => setSelectedHomeItem(null)} t={t} />}

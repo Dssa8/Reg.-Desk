@@ -11,7 +11,7 @@ export default function Login({ onLogin }) {
     e.preventDefault();
     const client = authenticate(username, password);
     if (!client) {
-      setError("Usuário ou senha inválidos.");
+      setError("E-mail ou senha inválidos.");
       return;
     }
     setError("");
@@ -45,13 +45,15 @@ export default function Login({ onLogin }) {
         <form onSubmit={submit} className="mt-6 space-y-4">
           <div>
             <label className="font-heading text-[11px] uppercase tracking-[0.14em] text-slate-500">
-              Usuário
+              E-mail
             </label>
             <input
+              type="email"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               autoFocus
               autoComplete="username"
+              placeholder="nome@empresa.com.br"
               className={inputClass}
             />
           </div>

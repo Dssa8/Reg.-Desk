@@ -20,16 +20,16 @@ export default function EditionBar({
     }`;
 
   return (
-    <div className="grid grid-cols-3 items-center gap-4 rounded-2xl border border-white/5 bg-white/10 px-3 py-2">
+    <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 rounded-2xl border border-white/5 bg-white/10 px-3 py-1.5">
       <div className="flex items-center gap-2.5 justify-self-start">
-        <span className="font-heading rounded-full bg-[#9FBE86] px-3.5 py-1.5 text-[13px] text-[#2b3f56]">
+        <span className="font-heading whitespace-nowrap rounded-full bg-[#9FBE86] px-3.5 py-1.5 text-[13px] text-[#2b3f56]">
           {activeEdition?.label}
         </span>
 
         <button
           type="button"
           onClick={onOpenHistory}
-          className="font-heading rounded-full bg-white px-3.5 py-1.5 text-[13px] text-[#2b3f56] shadow-sm transition hover:bg-slate-100 hover:shadow-md"
+          className="font-heading whitespace-nowrap rounded-full bg-white px-3.5 py-1.5 text-[13px] text-[#2b3f56] shadow-sm transition hover:bg-slate-100 hover:shadow-md"
         >
           {t.viewHistory}
         </button>
@@ -41,7 +41,7 @@ export default function EditionBar({
           aria-label={t.previous}
           disabled={!hasPreviousEdition}
           onClick={onPreviousEdition}
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-[16px] leading-none text-white transition hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white/10"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-[16px] leading-none text-white transition hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white/10"
         >
           ‹
         </button>
@@ -55,7 +55,7 @@ export default function EditionBar({
           aria-label={t.next}
           disabled={!hasNextEdition}
           onClick={onNextEdition}
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-[16px] leading-none text-white transition hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white/10"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-[16px] leading-none text-white transition hover:bg-white/20 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white/10"
         >
           ›
         </button>

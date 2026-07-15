@@ -48,6 +48,41 @@ export function getPrimaryChip(item) {
   return item.status || item.level || item.impact || item.type || "";
 }
 
+// Ordem de prioridade dos status: mais ativos/urgentes primeiro; não iniciados por último.
+const STATUS_ORDER = [
+  // Urgência (criticidade alta)
+  ["Crítica", "Crítico", "Critical", "Alta", "Alto", "High"],
+  // Em andamento / abertos / em acompanhamento
+  ["Em andamento", "In progress", "Aberta", "Open", "Em acompanhamento", "Under monitoring", "Em consulta pública", "Under consultation", "Iniciado", "Started"],
+  // Aguardando / agendados / previstos
+  ["Aguardando deliberação", "Awaiting decision", "Aguardando publicação", "Pending publication", "Aprovado pendente de publicação", "Approved pending publication", "Esperado", "Expected", "Previsto", "Agendado", "Scheduled"],
+  // Concluídos / publicados / encerrados
+  ["Concluído", "Completed", "Publicado", "Published", "Encerrada", "Closed", "Revogado", "Revoked"],
+  // Não iniciados / menor relevância
+  ["Não iniciada", "Não iniciado", "Not started", "Média", "Médio", "Medium"],
+];
+
+// Lista achatada: cada status tem sua própria posição, então status idênticos
+// ficam agrupados (não intercalados) e na ordem de prioridade definida acima.
+const STATUS_FLAT = STATUS_ORDER.flat();
+
+export function statusRank(item) {
+  const value = (item && (item.status || item.level || item.impact)) || "";
+  const idx = STATUS_FLAT.indexOf(value);
+  return idx === -1 ? STATUS_FLAT.length : idx;
+}
+
+// Ordena por status (estável: mantém a ordem original dentro do mesmo status).
+export function sortByStatus(items = []) {
+  return items
+    .map((item, index) => ({ item, index }))
+    .sort((a, b) => {
+      const diff = statusRank(a.item) - statusRank(b.item);
+      return diff !== 0 ? diff : a.index - b.index;
+    })
+    .map((entry) => entry.item);
+}
+
 // Todos os chips disponíveis (para o modal "ler mais").
 export function getChips(item, t) {
   const chips = [];

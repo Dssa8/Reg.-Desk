@@ -36,6 +36,8 @@ SHEET_NAMES = {
     "leiloes_comentarios": ["07_leiloes_comentarios", "09_leiloes_comentarios"],
     "agenda": ["10_agenda", "08_agenda"],
     "opcoes": ["14_listas_controladas", "12_listas_controladas", "Opcoes"],
+    "empresas": ["11_empresas", "09_empresas"],
+    "users": ["12_users", "10_users"],
 }
 
 FALLBACK_OPTIONS = {
@@ -555,6 +557,7 @@ def build_leiloes(df, option_map, comentarios_df=None, edicao_id=None, reference
                 item["agency"] = "MME/ANEEL"
                 set_bilingual_label(item, "type", "Comentário", "Comment")
                 item["tags"] = "leiloes"
+                item["kind"] = "comment"
                 items.append(item)
     return items
 
@@ -784,6 +787,33 @@ def write_editions_js(available_editions, output_dir):
     (output_dir / "editions.js").write_text("\n".join(lines), encoding="utf-8")
 
 
+def build_users(users_df, empresas_df):
+    """Lê usuários (12_users) + empresas (11_empresas) e monta a lista de login.
+    Usuário = e-mail; senha = coluna 'senha'; empresa define o nome/logo do cliente."""
+    companies = {}
+    if not empresas_df.empty:
+        for _, row in active_rows(empresas_df).iterrows():
+            cid = normalize_id(row.get("id"))
+            if cid:
+                companies[cid] = get_text(row, "nome")
+
+    users = []
+    if not users_df.empty:
+        for _, row in active_rows(users_df).iterrows():
+            email = get_text(row, "email")
+            senha = get_text(row, "senha")
+            if not email or not senha:
+                continue
+            company_id = normalize_id(row.get("empresa_id"))
+            users.append({
+                "username": email,
+                "password": senha,
+                "companyId": company_id,
+                "companyName": companies.get(company_id, get_text(row, "nome")),
+            })
+    return users
+
+
 def main():
     if not INPUT_FILE.exists():
         raise FileNotFoundError(f"Arquivo não encontrado: {INPUT_FILE}")
@@ -802,8 +832,16 @@ def main():
         "agenda": read_sheet(xls, "agenda", required=False),
     }
 
+    empresas = read_sheet(xls, "empresas", required=False)
+    users_df = read_sheet(xls, "users", required=False)
+
     option_map = build_option_map(opcoes)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    users = build_users(users_df, empresas)
+    with (OUTPUT_DIR / "users.json").open("w", encoding="utf-8") as f:
+        json.dump(users, f, ensure_ascii=False, indent=2)
+    print(f"Usuários gerados: {len(users)} -> {OUTPUT_DIR / 'users.json'}")
 
     for old_file in OUTPUT_DIR.glob("edition-*.json"):
         old_file.unlink()

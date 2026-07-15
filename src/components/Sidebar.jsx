@@ -57,7 +57,7 @@ export default function Sidebar({
     : [];
 
   return (
-    <aside className="flex min-h-screen w-80 flex-col bg-[#2b3f56] px-5 py-6 text-white">
+    <aside className="flex min-h-screen w-72 shrink-0 flex-col bg-[#2b3f56] px-5 py-6 text-white">
       <div className="flex items-center gap-3 px-2">
         <img src={logo} alt="RegDesk" className="h-10 w-auto shrink-0 object-contain" />
 
@@ -72,7 +72,28 @@ export default function Sidebar({
         </div>
       </div>
 
-      <nav className="mt-8 space-y-1">
+      {clientName && (
+        <div className="mt-4 flex items-center justify-between gap-3 border-y border-white/10 px-2 py-3">
+          <span className="min-w-0">
+            <span className="font-body block text-[10px] uppercase tracking-[0.2em] text-slate-400">
+              {t.clientLabel}
+            </span>
+            <span className="font-heading block truncate text-[13px] text-white">
+              {clientName}
+            </span>
+          </span>
+
+          <button
+            type="button"
+            onClick={onLogout}
+            className="font-heading shrink-0 text-[12px] text-[#9FBE86] transition hover:text-[#adca97]"
+          >
+            {t.logout}
+          </button>
+        </div>
+      )}
+
+      <nav className="mt-3.5 space-y-1">
         {items.map(([id, number, label]) => (
           <button
             key={id}
@@ -92,7 +113,7 @@ export default function Sidebar({
             </div>
 
             <span
-              className={`font-heading text-[15px] leading-tight transition ${
+              className={`font-heading text-[13.5px] leading-tight transition ${
                 activePage === id ? "text-white" : "text-slate-200 group-hover:text-white"
               }`}
             >
@@ -102,7 +123,7 @@ export default function Sidebar({
         ))}
       </nav>
 
-      <div className="mt-7 rounded-3xl border border-white/10 bg-white/5 p-4">
+      <div className="mt-3.5 rounded-3xl border border-white/10 bg-white/5 p-4">
         <div className="flex items-baseline justify-between">
           <p className="font-heading text-[11px] uppercase tracking-[0.22em] text-slate-400">
             {t.agendaLabel}
@@ -197,26 +218,6 @@ export default function Sidebar({
             {t.sidebarVisionText}
           </p>
         </div>
-
-        {clientName && (
-          <button
-            type="button"
-            onClick={onLogout}
-            className="mt-4 flex w-full items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left transition hover:bg-white/10"
-          >
-            <span className="min-w-0">
-              <span className="font-body block text-[10px] uppercase tracking-[0.2em] text-slate-400">
-                {t.clientLabel}
-              </span>
-              <span className="font-heading block truncate text-[13px] text-white">
-                {clientName}
-              </span>
-            </span>
-            <span className="font-heading shrink-0 text-[12px] text-[#9FBE86]">
-              {t.logout}
-            </span>
-          </button>
-        )}
       </div>
     </aside>
   );

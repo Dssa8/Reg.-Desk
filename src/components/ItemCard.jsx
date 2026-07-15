@@ -9,7 +9,7 @@ const SURFACE = {
 };
 
 // Card padrão usado em TODAS as seções e páginas, com a mesma hierarquia e
-// tamanhos de fonte dos cards de "Temas Abertos para Participação Pública".
+// tamanhos de fonte dos cards de "Participação Pública".
 export default function ItemCard({
   item,
   onClick,

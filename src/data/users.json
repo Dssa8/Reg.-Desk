@@ -1,0 +1,14 @@
+[
+  {
+    "username": "admin@fset.com.br",
+    "password": "fset2026",
+    "companyId": "1",
+    "companyName": "FSET"
+  },
+  {
+    "username": "usuario.cpfl@cpfl.com.br",
+    "password": "cpfl2026",
+    "companyId": "2",
+    "companyName": "CPFL Energia"
+  }
+]
