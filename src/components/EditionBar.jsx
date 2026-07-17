@@ -15,21 +15,21 @@ export default function EditionBar({
   const langButton = (lang) =>
     `font-heading rounded-full px-3.5 py-1.5 text-[13px] transition ${
       language === lang
-        ? "bg-[#9FBE86] text-[#2b3f56] shadow-sm"
+        ? "bg-[#86A876] text-[#021A34] shadow-sm"
         : "text-slate-200 hover:bg-white/10 hover:text-white"
     }`;
 
   return (
     <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 rounded-2xl border border-white/5 bg-white/10 px-3 py-1.5">
       <div className="flex items-center gap-2.5 justify-self-start">
-        <span className="font-heading whitespace-nowrap rounded-full bg-[#9FBE86] px-3.5 py-1.5 text-[13px] text-[#2b3f56]">
+        <span className="font-heading whitespace-nowrap rounded-full bg-[#86A876] px-3.5 py-1.5 text-[13px] text-[#021A34]">
           {activeEdition?.label}
         </span>
 
         <button
           type="button"
           onClick={onOpenHistory}
-          className="font-heading whitespace-nowrap rounded-full bg-white px-3.5 py-1.5 text-[13px] text-[#2b3f56] shadow-sm transition hover:bg-slate-100 hover:shadow-md"
+          className="font-heading whitespace-nowrap rounded-full bg-white px-3.5 py-1.5 text-[13px] text-[#021A34] shadow-sm transition hover:bg-slate-100 hover:shadow-md"
         >
           {t.viewHistory}
         </button>
@@ -46,7 +46,7 @@ export default function EditionBar({
           ‹
         </button>
 
-        <span className="font-card-title whitespace-nowrap text-[15px] text-white">
+        <span className="font-card-title whitespace-nowrap text-[14px] text-white">
           {t.monitoredWeek} · {edition.period || edition.month}
         </span>
 

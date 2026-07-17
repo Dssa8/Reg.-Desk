@@ -10,14 +10,14 @@ export default function Highlights({ data = [], onViewAll, t }) {
     <div className="mt-6" id="highlights">
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2b3f56] text-xs font-bold text-white">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#021A34] text-xs font-bold text-white">
             01
           </div>
 
           <h2 className="font-heading text-base text-slate-800">{t.highlights}</h2>
         </div>
 
-        <button onClick={onViewAll} className="font-heading text-xs text-[#3f5b70] hover:underline">
+        <button onClick={onViewAll} className="font-heading text-xs text-[#344A61] hover:underline">
           {t.viewAll}
         </button>
       </div>
@@ -65,7 +65,7 @@ export default function Highlights({ data = [], onViewAll, t }) {
             )}
 
             {selected.link && (
-              <a href={selected.link} target="_blank" rel="noreferrer" className="font-heading mt-6 inline-block text-sm text-[#3f5b70]">
+              <a href={selected.link} target="_blank" rel="noreferrer" className="font-heading mt-6 inline-block text-sm text-[#344A61]">
                 {t.openSource}
               </a>
             )}

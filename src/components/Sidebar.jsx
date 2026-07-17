@@ -1,6 +1,7 @@
 import { useState } from "react";
-import logo from "../assets/cropped_logo.png";
-import fsetLogo from "../assets/fset.png";
+import intelidesk from "../assets/intelidesk.png";
+import setaVerde from "../assets/seta-verde.png";
+import fsetLogo from "../assets/fset-verde.png";
 
 export default function Sidebar({
   agenda,
@@ -57,19 +58,18 @@ export default function Sidebar({
     : [];
 
   return (
-    <aside className="flex min-h-screen w-72 shrink-0 flex-col bg-[#2b3f56] px-5 py-6 text-white">
-      <div className="flex items-center gap-3 px-2">
-        <img src={logo} alt="RegDesk" className="h-10 w-auto shrink-0 object-contain" />
-
-        <div className="min-w-0">
-          <h2 className="font-heading relative top-[8px] text-[27px] leading-none tracking-tight text-white">
-            REGDESK
-          </h2>
-
-          <p className="font-body mt-1.5 text-[9px] uppercase tracking-[0.2em] text-slate-400">
-            {t.sidebarTagline}
-          </p>
-        </div>
+    <aside className="flex min-h-screen w-72 shrink-0 flex-col bg-gradient-to-t from-[#344A61] via-[#021A34] to-[#021A34] px-5 py-6 text-white">
+      <div className="flex items-center gap-2 px-2 py-1">
+        <img
+          src={setaVerde}
+          alt=""
+          className="h-8 w-auto shrink-0 object-contain"
+        />
+        <img
+          src={intelidesk}
+          alt="InteliDesk"
+          className="h-auto w-4/5 object-contain"
+        />
       </div>
 
       {clientName && (
@@ -86,7 +86,7 @@ export default function Sidebar({
           <button
             type="button"
             onClick={onLogout}
-            className="font-heading shrink-0 text-[12px] text-[#9FBE86] transition hover:text-[#adca97]"
+            className="font-heading shrink-0 text-[12px] text-[#86A876] transition hover:text-[#9CC084]"
           >
             {t.logout}
           </button>
@@ -105,8 +105,8 @@ export default function Sidebar({
             <div
               className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[12px] font-bold transition ${
                 activePage === id
-                  ? "bg-white text-[#2b3f56]"
-                  : "bg-[#9FBE86] text-white group-hover:bg-[#adca97]"
+                  ? "bg-white text-[#021A34]"
+                  : "bg-[#86A876] text-white group-hover:bg-[#9CC084]"
               }`}
             >
               {number}
@@ -157,9 +157,9 @@ export default function Sidebar({
                 onClick={() => hasEvent && setSelectedDay(day)}
                 className={`font-body flex aspect-square items-center justify-center rounded-lg text-[13px] transition ${
                   isSelected
-                    ? "bg-[#9FBE86] font-semibold text-white"
+                    ? "bg-[#86A876] font-semibold text-white"
                     : hasEvent
-                    ? "bg-white font-semibold text-[#2b3f56] hover:bg-[#adca97] hover:text-white"
+                    ? "bg-white font-semibold text-[#021A34] hover:bg-[#9CC084] hover:text-white"
                     : day
                     ? "text-slate-300 hover:bg-white/10"
                     : "bg-transparent"

@@ -1,22 +1,7 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: "TwCenSemiBold";
-  src: url("/fonts/TwCenMTStdSemiBold.otf") format("opentype");
-  font-weight: 600;
-}
-
-@font-face {
-  font-family: "TwCenSemiMedium";
-  src: url("/fonts/TwCenMTStdSemiMedium.otf") format("opentype");
-  font-weight: 500;
-}
-
-@font-face {
-  font-family: "TwCenLight";
-  src: url("/fonts/TwCenMTStdLight.otf") format("opentype");
-  font-weight: 300;
-}
+/* Fonte digital da marca FSET: Montserrat (carregada via Google Fonts no index.html).
+   Tw Cen MT é a fonte institucional; Montserrat é a alternativa digital do guia. */
 
 /* Reserva sempre o espaço da barra de rolagem para a largura não mudar
    entre edições/páginas (com ou sem scroll) */
@@ -24,10 +9,16 @@ html {
   scrollbar-gutter: stable;
 }
 
-/* Texto corrido do site: Tw Cen Light por padrão */
+/* Texto corrido do site: Montserrat Regular por padrão */
 html,
 body {
-  font-family: "TwCenLight", sans-serif;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  /* Montserrat tem x-height maior que a Tw Cen MT, então parece maior no mesmo
+     tamanho em px. font-size-adjust normaliza a altura para o tamanho aparente
+     de antes, sem alterar nenhum valor de fonte nos componentes.
+     Ajuste este número (menor = fontes menores) se quiser afinar. */
+  font-size-adjust: 0.47;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -40,17 +31,20 @@ body {
 
 /* Títulos e destaques fortes */
 .font-heading {
-  font-family: "TwCenSemiBold", sans-serif;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
 }
 
 /* Títulos de cards / subtítulos / ênfase média */
 .font-card-title {
-  font-family: "TwCenSemiMedium", sans-serif;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
 }
 
 /* Corpo de texto */
 .font-body {
-  font-family: "TwCenLight", sans-serif;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
 }
 
 /* Barra de rolagem clara em todo o app */

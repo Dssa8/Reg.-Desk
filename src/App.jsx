@@ -52,11 +52,11 @@ function FullPage({
 
   return (
     <div>
-      <button onClick={onBack} className="font-heading mb-3 text-[14px] text-[#3f5b70]">
+      <button onClick={onBack} className="font-heading mb-3 text-[14px] text-[#344A61]">
         {t.backToDashboard}
       </button>
 
-      <div className="rounded-3xl bg-gradient-to-br from-[#3a5570] via-[#2b3f56] to-[#1d2b38] px-8 py-4 text-white shadow-lg">
+      <div className="rounded-3xl bg-gradient-to-br from-[#344A61] via-[#021A34] to-[#021A34] px-8 py-4 text-white shadow-lg">
         <div className="mb-3">
           <EditionBar
             edition={edition}
@@ -72,15 +72,11 @@ function FullPage({
           />
         </div>
 
-        <p className="font-heading text-[12px] uppercase tracking-[0.3em] text-[#9FBE86]">
-          REGDESK
-        </p>
-
-        <h1 className="font-heading mt-1 text-[32px] leading-tight tracking-tight text-white">
+        <h1 className="font-heading text-[28px] leading-tight tracking-tight text-white">
           {title}
         </h1>
 
-        <p className="font-body mt-1.5 max-w-3xl text-[16px] leading-relaxed text-slate-300">
+        <p className="font-body mt-1.5 max-w-3xl text-[14px] leading-relaxed text-slate-300">
           {t.fullPageIntro}
         </p>
 
@@ -117,7 +113,7 @@ function FullPage({
             item={item}
             onClick={() => setSelectedItem(item)}
             surface="page"
-            footerLeft={item.agency || "RegDesk"}
+            footerLeft={item.agency || "InteliDesk"}
             openLabel={t.open}
             deadlineLabel={t.deadline}
           />
@@ -178,7 +174,7 @@ function ItemModal({ item, onClose, t }) {
         )}
 
         {item.link && (
-          <a href={item.link} target="_blank" rel="noreferrer" className="font-heading mt-6 inline-block text-sm text-[#3f5b70]">
+          <a href={item.link} target="_blank" rel="noreferrer" className="font-heading mt-6 inline-block text-sm text-[#344A61]">
             {t.openSource}
           </a>
         )}
@@ -192,11 +188,11 @@ function CompactSection({ id, number, title, data = [], emptyTitle, emptyDescrip
     <div id={id} className="flex h-[360px] flex-col rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2b3f56] text-xs font-bold text-white">{number}</div>
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#021A34] text-xs font-bold text-white">{number}</div>
           <h2 className="font-heading text-base text-slate-800">{title}</h2>
         </div>
 
-        <button onClick={onViewAll} className="font-heading text-xs text-[#3f5b70] hover:underline">{t.viewAll}</button>
+        <button onClick={onViewAll} className="font-heading text-xs text-[#344A61] hover:underline">{t.viewAll}</button>
       </div>
 
       <div className="mt-2 flex-1 space-y-3 overflow-y-auto pr-1">
@@ -206,7 +202,7 @@ function CompactSection({ id, number, title, data = [], emptyTitle, emptyDescrip
               key={`${item.title}-${index}`}
               item={item}
               onClick={() => onOpenItem(item)}
-              footerLeft={item.agency || defaultAgency || "RegDesk"}
+              footerLeft={item.agency || defaultAgency || "InteliDesk"}
               openLabel={t.open}
             />
           ))
@@ -403,14 +399,14 @@ function App() {
                       setActiveEditionIndex(index);
                       setShowHistory(false);
                     }}
-                    className={`w-full rounded-2xl border p-4 text-left transition ${index === activeEditionIndex ? "border-[#3f5b70] bg-slate-100" : "border-slate-100 bg-slate-50 hover:bg-white hover:shadow-sm"}`}
+                    className={`w-full rounded-2xl border p-4 text-left transition ${index === activeEditionIndex ? "border-[#344A61] bg-slate-100" : "border-slate-100 bg-slate-50 hover:bg-white hover:shadow-sm"}`}
                   >
                     <div className="flex items-center justify-between gap-4">
                       <div>
                         <p className="font-card-title text-slate-800">{item.label}</p>
                         <p className="font-body mt-1 text-sm text-slate-500">{item.data?.period || item.data?.month}</p>
                       </div>
-                      <span className="font-heading text-xs text-[#3f5b70]">{t.open}</span>
+                      <span className="font-heading text-xs text-[#344A61]">{t.open}</span>
                     </div>
                   </button>
                 ))}

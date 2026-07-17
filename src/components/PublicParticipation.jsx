@@ -5,11 +5,11 @@ export default function PublicParticipation({ data = [], onViewAll, onOpenItem, 
     <div id="public-participation" className="flex h-[360px] flex-col rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
       <div className="mb-4 flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#2b3f56] text-xs font-bold text-white">06</div>
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#021A34] text-xs font-bold text-white">06</div>
           <h2 className="font-heading text-base font-semibold leading-tight text-slate-800">{t.publicParticipation}</h2>
         </div>
 
-        <button type="button" onClick={onViewAll} className="font-heading shrink-0 text-xs text-[#3f5b70] hover:underline">
+        <button type="button" onClick={onViewAll} className="font-heading shrink-0 text-xs text-[#344A61] hover:underline">
           {t.viewAll}
         </button>
       </div>
@@ -21,7 +21,7 @@ export default function PublicParticipation({ data = [], onViewAll, onOpenItem, 
               key={`${item.title}-${index}`}
               item={item}
               onClick={() => onOpenItem?.(item)}
-              footerLeft={item.agency || "RegDesk"}
+              footerLeft={item.agency || "InteliDesk"}
               openLabel={t.open}
               deadlineLabel={t.deadline}
             />

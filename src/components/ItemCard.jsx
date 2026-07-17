@@ -4,7 +4,7 @@ import { CardChip } from "../lib/chips";
 // - "panel": card dentro de um painel branco (fundo levemente cinza).
 // - "page": card direto sobre o fundo da página (fundo branco com sombra).
 const SURFACE = {
-  panel: "bg-slate-50/60 hover:bg-white hover:shadow-sm",
+  panel: "bg-slate-100/35 hover:bg-white hover:shadow-sm",
   page: "bg-white shadow-sm hover:-translate-y-1 hover:shadow-md",
 };
 
@@ -20,7 +20,7 @@ export default function ItemCard({
   height = "h-[145px]",
 }) {
   const description = item.detail || item.summary || item.subtitle;
-  const left = footerLeft ?? item.agency ?? "RegDesk";
+  const left = footerLeft ?? item.agency ?? "InteliDesk";
 
   return (
     <button
@@ -54,7 +54,7 @@ export default function ItemCard({
               <span className="font-normal text-slate-400">{deadlineLabel}:</span> {item.deadline}
             </span>
           )}
-          <span className="font-heading text-xs text-[#3f5b70]">{openLabel}</span>
+          <span className="font-heading text-xs text-[#344A61]">{openLabel}</span>
         </div>
       </div>
     </button>

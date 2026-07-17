@@ -1,4 +1,5 @@
 import EditionBar from "./EditionBar";
+import intelidesk from "../assets/intelidesk.png";
 
 function Header({
   edition,
@@ -30,7 +31,7 @@ function Header({
   };
 
   return (
-    <header className="rounded-3xl bg-gradient-to-br from-[#3a5570] via-[#2b3f56] to-[#1d2b38] px-8 pt-4 pb-2 text-white shadow-lg">
+    <header className="rounded-3xl bg-gradient-to-br from-[#344A61] via-[#021A34] to-[#021A34] px-8 pt-4 pb-2 text-white shadow-lg">
       <div className="mb-3">
         <EditionBar
           edition={edition}
@@ -47,16 +48,14 @@ function Header({
       </div>
 
       <div className="grid grid-cols-[1fr_220px] gap-8">
-        <div>
-          <p className="font-heading text-[12px] uppercase tracking-[0.3em] text-[#9FBE86]">
-            REGDESK
-          </p>
+        <div className="mt-2">
+          <img
+            src={intelidesk}
+            alt={t.dashboardTitle}
+            className="h-9 w-auto object-contain"
+          />
 
-          <h1 className="font-heading mt-1 text-[32px] leading-tight tracking-tight text-white">
-            {t.dashboardTitle}
-          </h1>
-
-          <p className="font-body mt-1.5 max-w-3xl text-[16px] leading-relaxed text-slate-300">
+          <p className="font-body mt-3 max-w-3xl text-[14px] leading-relaxed text-slate-300">
             {t.dashboardSubtitle}
           </p>
         </div>
@@ -84,7 +83,7 @@ function Header({
         </div>
       </div>
 
-      <div className="mt-2 grid grid-cols-3 gap-x-4 gap-y-3 border-t border-white/10 pt-2 sm:grid-cols-4 lg:grid-cols-7">
+      <div className="mt-1 grid grid-cols-3 gap-x-4 gap-y-3 border-t border-white/10 pt-2 sm:grid-cols-4 lg:grid-cols-7">
         {metrics.map((metric) => (
           <button
             key={metric.id}
@@ -92,7 +91,7 @@ function Header({
             onClick={() => goToSection(metric.id)}
             className="group flex flex-col items-center rounded-xl px-2 py-1 text-center transition hover:bg-white/5"
           >
-            <p className="font-heading text-[24px] leading-none text-white transition group-hover:text-[#9FBE86]">
+            <p className="font-heading text-[24px] leading-none text-white transition group-hover:text-[#86A876]">
               {metric.value}
             </p>
             <p className="font-body mt-1.5 text-[10px] uppercase leading-none tracking-[0.12em] text-slate-400 transition group-hover:text-slate-200">

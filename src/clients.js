@@ -1,5 +1,5 @@
 import cpflLogo from "./assets/cpfl.png";
-import fsetLogo from "./assets/fset.png";
+import fsetLogo from "./assets/fset-verde.png";
 import users from "./data/users.json";
 
 // Login (demo) baseado na aba 12_users do Excel: usuário = e-mail, senha = coluna "senha".

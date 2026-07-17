@@ -14,13 +14,13 @@ export default function RegulatoryTopics({
     <div className="flex h-[360px] flex-col rounded-3xl border border-slate-100 bg-white p-5 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2b3f56] text-xs font-bold text-white">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#021A34] text-xs font-bold text-white">
             {number}
           </div>
           <h2 className="font-heading text-base text-slate-800">{title}</h2>
         </div>
 
-        <button onClick={onViewAll} className="font-heading text-xs text-[#3f5b70] hover:underline">
+        <button onClick={onViewAll} className="font-heading text-xs text-[#344A61] hover:underline">
           {t.viewAll}
         </button>
       </div>
@@ -31,7 +31,7 @@ export default function RegulatoryTopics({
             key={topic.title}
             item={topic}
             onClick={() => onOpenItem?.(topic)}
-            footerLeft={topic.agency || "RegDesk"}
+            footerLeft={topic.agency || "InteliDesk"}
             openLabel={t.open}
           />
         ))}
